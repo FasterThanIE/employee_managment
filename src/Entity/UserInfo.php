@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserInfoRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,278 +11,345 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserInfo
 {
+
+    const CONTACT_TYPE_PERM = "permanent";
+    const CONTACT_TYPE_TEMP = "temporarily";
+
     /**
+     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
     private $user_id;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="date")
      */
     private $date_of_birth;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=20)
      */
     private $nationality;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=64)
      */
     private $religious_holiday;
 
     /**
+     * @var DateTime
      * @ORM\Column(type="date")
      */
     private $religious_date;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=128)
      */
     private $school;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=64)
      */
     private $city;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=128)
      */
     private $address;
 
     /**
+     * @var integer
      * @ORM\Column(type="integer", length=16)
      */
     private $cellphone;
 
     /**
+     * @var integer
      * @ORM\Column(type="integer", length=20)
      */
     private $unique_citizen_number;
 
     /**
+     * @var boolean
      * @ORM\Column(type="boolean")
      */
     private $married;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=64)
      */
     private $partner_name;
 
     /**
+     * @var integer
      * @ORM\Column(type="integer", length=2)
      */
     private $kids_count;
 
     /**
-     * @return mixed
+     * @var string
+     * @ORM\Column(type="string", length=20)
      */
-    public function getUserId()
+    private $contract_type;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $contract_end_date;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
     {
         return $this->user_id;
     }
 
     /**
-     * @param mixed $user_id
+     * @param int $user_id
      */
-    public function setUserId($user_id): void
+    public function setUserId(int $user_id): void
     {
         $this->user_id = $user_id;
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getDateOfBirth()
+    public function getDateOfBirth(): DateTime
     {
         return $this->date_of_birth;
     }
 
     /**
-     * @param mixed $date_of_birth
+     * @param DateTime $date_of_birth
      */
-    public function setDateOfBirth($date_of_birth): void
+    public function setDateOfBirth(DateTime $date_of_birth): void
     {
         $this->date_of_birth = $date_of_birth;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getnationality()
+    public function getNationality(): string
     {
         return $this->nationality;
     }
 
     /**
-     * @param mixed $nationality
+     * @param string $nationality
      */
-    public function setnationality($nationality): void
+    public function setNationality(string $nationality): void
     {
         $this->nationality = $nationality;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getReligiousHoliday()
+    public function getReligiousHoliday(): string
     {
         return $this->religious_holiday;
     }
 
     /**
-     * @param mixed $religious_holiday
+     * @param string $religious_holiday
      */
-    public function setReligiousHoliday($religious_holiday): void
+    public function setReligiousHoliday(string $religious_holiday): void
     {
         $this->religious_holiday = $religious_holiday;
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
-    public function getReligiousDate()
+    public function getReligiousDate(): DateTime
     {
         return $this->religious_date;
     }
 
     /**
-     * @param mixed $religious_date
+     * @param DateTime $religious_date
      */
-    public function setReligiousDate($religious_date): void
+    public function setReligiousDate(DateTime $religious_date): void
     {
         $this->religious_date = $religious_date;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSchool()
+    public function getSchool(): string
     {
         return $this->school;
     }
 
     /**
-     * @param mixed $school
+     * @param string $school
      */
-    public function setSchool($school): void
+    public function setSchool(string $school): void
     {
         $this->school = $school;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
     /**
-     * @param mixed $city
+     * @param string $city
      */
-    public function setCity($city): void
+    public function setCity(string $city): void
     {
         $this->city = $city;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
 
     /**
-     * @param mixed $address
+     * @param string $address
      */
-    public function setAddress($address): void
+    public function setAddress(string $address): void
     {
         $this->address = $address;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getCellphone()
+    public function getCellphone(): int
     {
         return $this->cellphone;
     }
 
     /**
-     * @param mixed $cellphone
+     * @param int $cellphone
      */
-    public function setCellphone($cellphone): void
+    public function setCellphone(int $cellphone): void
     {
         $this->cellphone = $cellphone;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUniqueCitizenNumber()
+    public function getUniqueCitizenNumber(): int
     {
         return $this->unique_citizen_number;
     }
 
     /**
-     * @param mixed $unique_citizen_number
+     * @param int $unique_citizen_number
      */
-    public function setUniqueCitizenNumber($unique_citizen_number): void
+    public function setUniqueCitizenNumber(int $unique_citizen_number): void
     {
         $this->unique_citizen_number = $unique_citizen_number;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getMarried()
+    public function isMarried(): bool
     {
         return $this->married;
     }
 
     /**
-     * @param mixed $married
+     * @param bool $married
      */
-    public function setMarried($married): void
+    public function setMarried(bool $married): void
     {
         $this->married = $married;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPartnerName()
+    public function getPartnerName(): string
     {
         return $this->partner_name;
     }
 
     /**
-     * @param mixed $partner_name
+     * @param string $partner_name
      */
-    public function setPartnerName($partner_name): void
+    public function setPartnerName(string $partner_name): void
     {
         $this->partner_name = $partner_name;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getKidsCount()
+    public function getKidsCount(): int
     {
         return $this->kids_count;
     }
 
     /**
-     * @param mixed $kids_count
+     * @param int $kids_count
      */
-    public function setKidsCount($kids_count): void
+    public function setKidsCount(int $kids_count): void
     {
         $this->kids_count = $kids_count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContractType(): string
+    {
+        return $this->contract_type;
+    }
+
+    /**
+     * @param string $contract_type
+     */
+    public function setContractType(string $contract_type): void
+    {
+        $this->contract_type = $contract_type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContractEndDate()
+    {
+        return $this->contract_end_date;
+    }
+
+    /**
+     * @param mixed $contract_end_date
+     */
+    public function setContractEndDate($contract_end_date): void
+    {
+        $this->contract_end_date = $contract_end_date;
     }
 
     /**
@@ -300,11 +368,6 @@ class UserInfo
         $this->user = $user;
     }
 
-    /**
-     * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
+
 
 }
