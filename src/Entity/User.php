@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +54,29 @@ class User
      * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      */
     private $userInfo;
+
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", options={"default":"CURRENT_TIMESTAMP"})
+     */
+    private $registrationDate;
+
+    /**
+     * @return DateTime
+     */
+    public function getRegistrationDate(): DateTime
+    {
+        return $this->registrationDate;
+    }
+
+    /**
+     * @param DateTime $registrationDate
+     */
+    public function setRegistrationDate(DateTime $registrationDate): void
+    {
+        $this->registrationDate = $registrationDate;
+    }
 
     /**
      * @return UserInfo
@@ -150,6 +174,9 @@ class User
         $this->type = $type;
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
