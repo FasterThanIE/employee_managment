@@ -24,19 +24,19 @@ class UserInfo
 
     /**
      * @var DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $date_of_birth;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $nationality;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $religious_holiday;
 
@@ -48,55 +48,55 @@ class UserInfo
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $school;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $city;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, nullable=true)
      */
     private $address;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer", length=16)
+     * @ORM\Column(type="integer", length=16, nullable=true)
      */
     private $cellphone;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer", length=20)
+     * @ORM\Column(type="integer", length=20, nullable=true)
      */
     private $unique_citizen_number;
 
     /**
      * @var boolean
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $married;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $partner_name;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer", length=2)
+     * @ORM\Column(type="integer", length=2, nullable=true)
      */
     private $kids_count;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $contract_type;
 
