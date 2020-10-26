@@ -113,6 +113,12 @@ class UserInfo
     private $user;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $team_id;
+
+    /**
      * @return int
      */
     public function getUserId(): int
