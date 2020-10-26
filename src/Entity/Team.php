@@ -33,6 +33,29 @@ class Team
     private $createdOn;
 
     /**
+     * @var TeamRoles
+     * @ORM\OneToMany(targetEntity="TeamRoles", mappedBy="team")
+     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
+     */
+    private $roles;
+
+    /**
+     * @return TeamRoles
+     */
+    public function getRoles(): TeamRoles
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param TeamRoles $roles
+     */
+    public function setRoles(TeamRoles $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
