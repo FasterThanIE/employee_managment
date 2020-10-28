@@ -15,6 +15,6 @@ class HomeController extends AbstractController
     public function dashboard(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        return $this->render('');
+        return $this->render("pages/dashboard.twig");
     }
 }
