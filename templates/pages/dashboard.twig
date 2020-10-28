@@ -4,7 +4,10 @@
 
     <div class="d-flex">
         {% include "partials/dashboard/navigation.twig" %}
-        {% include "partials/dashboard/home/overlay.twig" %}
+
+        <div class="mt-5 bg-dark col-6 p-5 text-light">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 
 

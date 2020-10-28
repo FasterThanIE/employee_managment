@@ -1,0 +1,31 @@
+{% extends "pages/dashboard.twig" %}
+
+{% block content %}
+
+    <h1>Requests</h1>
+
+    <div>
+        <button class="btn btn-primary __new_request">Make new request</button>
+        <button class="btn btn-primary">Check request statuses</button>
+        <button class="btn btn-primary">Show request history</button>
+    </div>
+
+    <div class="__request_review"></div>
+
+    <script>
+        $(document).ready(function() {
+
+            $(".__new_request").click(function (){
+                $.ajax({
+                    url: "/requests/new_request",
+                    success: function (data)
+                    {
+                        console.log(data);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+{% endblock %}
