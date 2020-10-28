@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+body {
+    height: 2000px;
+}
+
 .min100VH {
     min-height: 100vh;
 }
+
