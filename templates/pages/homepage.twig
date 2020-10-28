@@ -1,6 +1,19 @@
 {% extends "base.twig" %}
 
-{% block content %}
+{% block body %}
 
+    <header class="min100VH bg-dark d-flex justify-content-center align-items-center">
+
+        <div class="p-5">
+            <h3 class="text-light">New member?</h3>
+            <button onclick="window.location.href='/registration'" class="btn btn-info btn-lg btn-block">Register</button>
+        </div>
+
+        <div class="p-5">
+            <h3 class="text-light">Existing member?</h3>
+            <button onclick="window.location.href='/login'" class="btn btn-info btn-lg btn-block">Login</button>
+        </div>
+
+    </header>
 
 {% endblock %}
