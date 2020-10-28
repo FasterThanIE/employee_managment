@@ -9,6 +9,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+
+    /**
+     * @Route("/authenticate", name="authentication_choice")
+     */
+    public function index(): Response
+    {
+        return $this->render('pages/authentication_method_pick.twig');
+    }
+
     /**
      * @Route("/login", name="app_login")
      */

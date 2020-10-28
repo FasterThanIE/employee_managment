@@ -12,8 +12,9 @@ class HomeController extends AbstractController
      * @Route("/", name="home")
      * @Route("/home", name="home")
      */
-    public function index(): Response
+    public function dashboard(): Response
     {
-        return $this->render('pages/homepage.twig');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        return $this->render('');
     }
 }
