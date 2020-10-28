@@ -190,9 +190,16 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getRoles()
+    /**
+     * @return string[]
+     */
+    public function getRoles() : array
     {
-        // TODO: Implement getRoles() method.
+        return [
+            self::USER_ROLE_NORMAL,
+            self::USER_ROLE_ADMIN,
+            self::USER_ROLE_DEVELOPER
+        ];
     }
 
     public function getSalt()
