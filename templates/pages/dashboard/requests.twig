@@ -2,12 +2,17 @@
 
 {% block content %}
 
+
+    {% if app.request.get('message') %}
+        <h4 class="text-info">{{ app.request.get('message') }}</h4>
+        <hr>
+    {% endif %}
+
     <h4>Requests</h4>
 
     <div class="d-flex flex-wrap">
         <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary __new_request">Make new request</button>
-        <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary">Check request statuses</button>
-        <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary">Show request history</button>
+        <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary __view_old_requests">Show request history</button>
     </div>
 
     <div class="__request_review"></div>
@@ -15,7 +20,22 @@
     <script>
         $(document).ready(function() {
 
+            {% if app.request.get('action') %}
+                {% if app.request.get('action') == "show_history" %}
+                    viewOldRequests();
+                {% endif %}
+            {% endif %}
+
             $(".__new_request").click(function (){
+                showNewRequestForm();
+            });
+
+            $(".__view_old_requests").click(function () {
+                viewOldRequests();
+            });
+
+            function showNewRequestForm()
+            {
                 $.ajax({
                     url: "/requests/new_request",
                     success: function (data)
@@ -23,7 +43,18 @@
                         $(".__request_review").html(data);
                     }
                 });
-            });
+            }
+
+            function viewOldRequests()
+            {
+                $.ajax({
+                    url: "/requests/history",
+                    success: function (data)
+                    {
+                        $(".__request_review").html(data);
+                    }
+                });
+            }
 
         });
     </script>

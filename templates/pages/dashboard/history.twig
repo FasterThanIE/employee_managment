@@ -1,0 +1,29 @@
+
+<table class="table ">
+
+    <thead class="thead-dark">
+        <tr>
+            <th>id</th>
+            <td>Start date</td>
+            <td>End date</td>
+            <td>Status</td>
+            <td>Type</td>
+            <td>Category</td>
+        </tr>
+    </thead>
+
+    <thead class="thead-light">
+        {% for request in requests %}
+            <tr>
+                <td>{{ request.getId() }}</td>
+                <td>{{ request.getStartDate().format('m.d.Y') }}</td>
+                <td>{{ request.getEndDate().format('m.d.Y') }}</td>
+                <td>{{ request.getStatus() }}</td>
+                <td>{{ request.getType() }}</td>
+                <td>{{ request.getCategory() }}</td>
+            </tr>
+        {% endfor %}
+    </thead>
+
+</table>
+

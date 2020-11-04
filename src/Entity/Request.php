@@ -248,7 +248,7 @@ class Request
      */
     public function setType(string $type): void
     {
-        if(!$this->isValidType($type))
+        if(!self::isValidType($type))
         {
             throw new InvalidTypeException("Invalid type encountered ".$type);
         }
@@ -259,7 +259,7 @@ class Request
      * @param string $type
      * @return bool
      */
-    public function isValidType(string $type) : bool
+    public static function isValidType(string $type) : bool
     {
         return in_array($type, self::VALID_TYPES);
     }
@@ -278,7 +278,7 @@ class Request
      */
     public function setCategory(string $category): void
     {
-        if(!$this->isValidCategory($category))
+        if(!self::isValidCategory($category))
         {
             throw new InvalidCategoryException("Invalid category encountered ".$category);
         }
@@ -290,7 +290,7 @@ class Request
      * @param string $category
      * @return bool
      */
-    public function isValidCategory(string $category): bool
+    public static function isValidCategory(string $category): bool
     {
         return in_array($category, self::VALID_CATEGORIES);
     }

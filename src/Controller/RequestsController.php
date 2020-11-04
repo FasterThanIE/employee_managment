@@ -6,8 +6,10 @@ use App\Entity\Request;
 use App\Form\NewRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use \Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class RequestsController extends AbstractController
 {
@@ -32,6 +34,57 @@ class RequestsController extends AbstractController
 
         return $this->render("partials/forms/new_request.twig", [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/requests/history", name="request_history")
+     */
+    public function showRequestHistory()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $data = $em->getRepository(Request::class)->findBy([
+            'user_id' => $this->getUser()->getId()
+        ]);
+
+        return $this->render("pages/dashboard/history.twig", [
+            'requests' => $data
+        ]);
+    }
+
+    /**
+     * @Route("/request/create_request", name="create_request", methods={"POST"})
+     * @param SymfonyRequest $request
+     * @return RedirectResponse
+     */
+    public function createNewRequest(SymfonyRequest $request)
+    {
+        $domain = new Request();
+
+        $form = $this->createForm(NewRequestType::class, $domain);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $data = $form->getData();
+            $data->setUserId($this->getUser()->getId());
+            $data->setTeamId(1); // TODO: Get user real team
+            $data->setCreatedOn(new \DateTime());
+            $data->setUpdatedBy($this->getUser()->getId());
+            $em->persist($data);
+            $em->flush();
+
+            return $this->redirectToRoute('requests', [
+                'message' => "You have successfully sent a request.",
+                'action' => "show_history"
+            ]);
+        }
+
+        return $this->redirectToRoute('requests', [
+            'message' => "There was a problem with your request. Please try again.",
         ]);
     }
 }
