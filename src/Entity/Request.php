@@ -327,5 +327,17 @@ class Request
         $this->endDate = $endDate;
     }
 
+    /**
+     * @return array
+     */
+    public static function getAllowedYears(): array
+    {
+        return [
+            date('Y'),
+            date('Y', strtotime("-1 year")),
+            date('Y', strtotime("+1 year"))
+        ];
+    }
+
 
 }
