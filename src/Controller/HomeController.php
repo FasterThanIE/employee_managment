@@ -10,7 +10,8 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @Route("/home", name="home")
+     * @Route("/home", name="home_")
+     * @Route("/dashboard", name="dashboard")
      */
     public function dashboard(): Response
     {

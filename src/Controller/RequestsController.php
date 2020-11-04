@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Request;
+use App\Form\NewRequestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +23,15 @@ class RequestsController extends AbstractController
 
     /**
      * @Route("/requests/new_request", name="new_request")
-     * @return JsonResponse
      */
-    public function showNewRequest(): JsonResponse
+    public function showNewRequest()
     {
+        $domain = new Request();
+        $domain->setCreatedOn(new \DateTime());
+        $form = $this->createForm(NewRequestType::class, $domain);
 
-        return $this->json(['success' => true]);
+        return $this->render("partials/forms/new_request.twig", [
+            'form' => $form->createView()
+        ]);
     }
 }
