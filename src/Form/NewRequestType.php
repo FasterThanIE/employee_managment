@@ -16,18 +16,12 @@ class NewRequestType extends AbstractType
     {
         $builder
             ->add('start_date', DateType::class, [
-                'placeholder' => [
-                    'day' => intval(date('d')),
-                    'month' => date('M')
-                ],
-                'years' => Request::getAllowedYears()
+                'years' => Request::getAllowedYears(),
+                'data' => new \DateTime()
             ])
             ->add('end_date', DateType::class, [
-                'placeholder' => [
-                    'day' => intval(date('d', time()+86400)),
-                    'month' => date('M')
-                ],
-                'years' => Request::getAllowedYears()
+                'years' => Request::getAllowedYears(),
+                'data' => new \DateTime("+1 day")
             ])
             ->add('category', ChoiceType::class, [
                 'choices' => array_flip(Request::VALID_CATEGORIES),
