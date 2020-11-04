@@ -332,6 +332,7 @@ class Request
      */
     public static function getAllowedYears(): array
     {
+        // TODO: Add so he can see next year ONLY if his contract lasts until then
         return [
             date('Y'),
             date('Y', strtotime("-1 year")),
