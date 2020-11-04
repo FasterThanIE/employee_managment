@@ -296,9 +296,9 @@ class Request
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getStartDate(): DateTime
+    public function getStartDate(): ?DateTime
     {
         return $this->startDate;
     }
@@ -312,9 +312,9 @@ class Request
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getEndDate(): DateTime
+    public function getEndDate(): ?DateTime
     {
         return $this->endDate;
     }
