@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exceptions\InvalidUserRoleException;
 use App\Repository\UsersRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
+    /**
+     * ==========================================
+     * Types
+     * Add any roles that you add to VALID_ROLES. This constant is used to check if ROLE is valid or not
+     */
+    const VALID_ROLES = [
+        self::USER_ROLE_NORMAL, self::USER_ROLE_ADMIN, self::USER_ROLE_DEVELOPER,
+    ];
     const USER_ROLE_NORMAL      = "normal";
     const USER_ROLE_ADMIN       = "administrator";
     const USER_ROLE_DEVELOPER   = "developer";
@@ -176,9 +185,14 @@ class User implements UserInterface
 
     /**
      * @param mixed $type
+     * @throws InvalidUserRoleException
      */
     public function setType($type): void
     {
+        if(!self::isValidRole($type))
+        {
+            throw new InvalidUserRoleException("Role ".$type." is not a valid role");
+        }
         $this->type = $type;
     }
 
@@ -227,5 +241,14 @@ class User implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public static function isValidRole(string $role) : bool
+    {
+        return in_array($role, self::VALID_ROLES);
     }
 }
