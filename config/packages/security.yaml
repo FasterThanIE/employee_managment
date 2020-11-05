@@ -35,3 +35,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - {path: ^/requests, roles: [IS_AUTHENTICATED_FULLY]}
+        - {path: ^/user, roles: [IS_AUTHENTICATED_FULLY]}
