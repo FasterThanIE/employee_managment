@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Exceptions\InvalidUserRoleException;
+use App\Exceptions\InvalidUserStatusException;
 use App\Repository\UsersRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+
+    const INVALID_ACCOUNT_AFTER = "- 30days";
+
+    /**
+     * ==========================================
+     * Status
+     * Add any statuses that you add to VALID_STATUSES. This constant is used to check if STATUS is valid or not
+     */
+    const VALID_STATUSES = [
+        self::USER_STATUS_ACTIVE, self::USER_STATUS_INACTIVE, self::USER_STATUS_PENDING,
+        self::USER_STATUS_BANNED,
+    ];
+    const USER_STATUS_ACTIVE    = "active";
+    const USER_STATUS_INACTIVE  = "inactive";
+    const USER_STATUS_PENDING   = "pending";
+    const USER_STATUS_BANNED    = "banned";
 
     /**
      * ==========================================
@@ -78,6 +95,12 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=20)
+     */
+    private $status = self::USER_STATUS_PENDING;
 
     /**
      * @return DateTime
@@ -250,5 +273,35 @@ class User implements UserInterface
     public static function isValidRole(string $role) : bool
     {
         return in_array($role, self::VALID_ROLES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @throws InvalidUserStatusException
+     */
+    public function setStatus(string $status): void
+    {
+        if(!self::isValidStatus($status))
+        {
+            throw new InvalidUserStatusException("Status ".$status." is not a valid status");
+        }
+        $this->status = $status;
+    }
+
+    /**
+     * @param string $status
+     * @return bool
+     */
+    public static function isValidStatus(string $status) : bool
+    {
+        return in_array($status, self::VALID_STATUSES);
     }
 }
