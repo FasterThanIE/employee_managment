@@ -42,7 +42,7 @@ class UserInfo
 
     /**
      * @var DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $religious_date;
 
@@ -101,7 +101,7 @@ class UserInfo
     private $contract_type;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $contract_end_date;
 
