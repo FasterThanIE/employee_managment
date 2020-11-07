@@ -24,7 +24,7 @@ class Team
      * @var string
      * @ORM\Column(type="string", name="name", length=128, unique=true)
      */
-    private $teamName;
+    private $name;
 
     /**
      * @var DateTime
@@ -79,17 +79,17 @@ class Team
     /**
      * @return string
      */
-    public function getTeamName(): string
+    public function getName(): string
     {
-        return $this->teamName;
+        return $this->name;
     }
 
     /**
-     * @param string $teamName
+     * @param string $name
      */
-    public function setTeamName(string $teamName): void
+    public function setName(string $name): void
     {
-        $this->teamName = $teamName;
+        $this->name = $name;
     }
 
     /**

@@ -2,7 +2,34 @@
 
 {% block content %}
 
-    <h1>Before continuing you must join a team</h1>
-    <p>Please apply to a team from the list bellow</p>
+    <div>
+        <h1>Before continuing you must join a team or create one</h1>
+        <p>To see the list of avaliable teams, press the "Show teams" button bellow</p>
+        <p>To create a team, click "Create new team"</p>
+    </div>
+
+    <div class="d-flex">
+        <button class="m-2 p-3 btn btn-primary __show_teams">Show teams</button>
+        <button class="m-2 p-3 btn btn-primary __create_team">Create new team</button>
+    </div>
+
+    <div class="__request_review"></div>
+
+    <script>
+        $(document).ready(function() {
+
+            $(".__show_teams").click(function () {
+                $.ajax({
+                    url: "/teams/show_all",
+                    success: function (data)
+                    {
+                        $(".__request_review").html(data.data);
+                    }
+                });
+            });
+
+        });
+    </script>
+
 
 {% endblock %}

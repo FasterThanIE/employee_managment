@@ -1,0 +1,27 @@
+
+<table class="table ">
+
+    <thead class="thead-dark">
+    <tr>
+        <th>id</th>
+        <td>Name</td>
+        <td>Created on</td>
+        <td>Action</td>
+    </tr>
+    </thead>
+
+    <thead class="thead-light">
+        {% for team in teams %}
+            <tr>
+                <td>{{ team.getId() }}</td>
+                <td>{{ team.getName() }}</td>
+                <td>{{ team.getCreatedOn().format('d-m-Y') }}</td>
+                <td>
+                    <button class="btn-primary btn">Apply</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </thead>
+
+</table>
+
