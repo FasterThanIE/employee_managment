@@ -3,3 +3,8 @@ Initial idea is simple, application that will allow people to register, create t
 Besides that they will be able to fill some basic informations about that 
 
 Please do not mind the frontend, I did not put too much effort into it. I plan to do it in some future iteration when I implement some frontend framework
+
+
+#Credits 
+- Tomislav Nikolic, project found & creator
+- "msg" by helping with statuses. https://stackoverflow.com/users/4782169
