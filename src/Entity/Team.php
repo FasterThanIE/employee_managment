@@ -22,9 +22,9 @@ class Team
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", name="name", length=128, unique=true)
      */
-    private $team_name;
+    private $teamName;
 
     /**
      * @var DateTime
@@ -38,6 +38,11 @@ class Team
      * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
      */
     private $roles;
+
+    public function __construct()
+    {
+        $this->createdOn = new DateTime();
+    }
 
     /**
      * @return TeamRoles
@@ -76,15 +81,15 @@ class Team
      */
     public function getTeamName(): string
     {
-        return $this->team_name;
+        return $this->teamName;
     }
 
     /**
-     * @param string $team_name
+     * @param string $teamName
      */
-    public function setTeamName(string $team_name): void
+    public function setTeamName(string $teamName): void
     {
-        $this->team_name = $team_name;
+        $this->teamName = $teamName;
     }
 
     /**
