@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Request;
 use App\Form\NewRequestType;
+use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -18,6 +19,7 @@ class RequestsController extends AbstractController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
         return $this->render("pages/dashboard/requests.twig");
     }
 
@@ -26,6 +28,8 @@ class RequestsController extends AbstractController
      */
     public function showNewRequest()
     {
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
+
         $domain = new Request();
         $domain->setCreatedOn(new \DateTime());
         $form = $this->createForm(NewRequestType::class, $domain);
@@ -40,6 +44,8 @@ class RequestsController extends AbstractController
      */
     public function showRequestHistory()
     {
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
+
         $em = $this->getDoctrine()->getManager();
 
         $data = $em->getRepository(Request::class)->findBy([
@@ -58,6 +64,8 @@ class RequestsController extends AbstractController
      */
     public function createNewRequest(SymfonyRequest $request)
     {
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
+
         $domain = new Request();
 
         $form = $this->createForm(NewRequestType::class, $domain);

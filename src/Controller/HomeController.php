@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,8 @@ class HomeController extends AbstractController
      */
     public function dashboard(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
+
         return $this->render("pages/dashboard/home.twig");
     }
 }

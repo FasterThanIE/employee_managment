@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserFormType;
+use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -17,6 +18,8 @@ class UserController extends AbstractController
      */
     public function showSettings()
     {
+        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
+
         $form = $this->createForm(UserFormType::class, $this->getUser());
         return $this->render("pages/user/settings.twig",[
             'form' => $form->createView()
