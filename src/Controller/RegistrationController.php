@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserInfo;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,10 +42,16 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setRegistrationDate(new \DateTime());
+            $user->setRegistrationDate(new DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            $entityManager->flush();
+
+            $userInfo = new UserInfo();
+            $userInfo->setUser($user);
+            $userInfo->setTeamId(UserInfo::TEAM_NONE);
+            $entityManager->persist($userInfo);
             $entityManager->flush();
 
             // generate a signed url and email it to the user

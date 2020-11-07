@@ -12,8 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
 class UserInfo
 {
 
-    const CONTACT_TYPE_PERM = "permanent";
-    const CONTACT_TYPE_TEMP = "temporarily";
+    /* Literally placeholder for no_team */
+    const TEAM_NONE = 0;
+
+    /**
+     * ==========================================
+     * Contract types
+     * Add any contract types that you add to VALID_CONTRACTS. This constant is used to check if CONTRACT is valid or not
+     */
+    const VALID_CONTRACTS = [
+        self::CONTRACT_TYPE_PERM, self::CONTRACT_TYPE_TEMP
+    ];
+    const CONTRACT_TYPE_PERM = "permanent";
+    const CONTRACT_TYPE_TEMP = "temporarily";
 
     /**
      * @var int
@@ -107,7 +118,7 @@ class UserInfo
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="userInfo")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -372,8 +383,33 @@ class UserInfo
     public function setUser(User $user): void
     {
         $this->user = $user;
+        $this->setUserId($user->getId());
     }
 
+    /**
+     * @return int
+     */
+    public function getTeamId(): int
+    {
+        return $this->team_id;
+    }
+
+    /**
+     * @param int $team_id
+     */
+    public function setTeamId(int $team_id): void
+    {
+        $this->team_id = $team_id;
+    }
+
+    /**
+     * @param string $contract
+     * @return bool
+     */
+    public function isValidContract(string $contract) : bool
+    {
+        return in_array($contract, self::VALID_CONTRACTS);
+    }
 
 
 }
