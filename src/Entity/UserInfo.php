@@ -125,12 +125,6 @@ class UserInfo
     private $user;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $team_id;
-
-    /**
      * @return int
      */
     public function getUserId(): int
@@ -390,22 +384,6 @@ class UserInfo
     {
         $this->user = $user;
         $this->setUserId($user->getId());
-    }
-
-    /**
-     * @return int
-     */
-    public function getTeamId(): int
-    {
-        return $this->team_id;
-    }
-
-    /**
-     * @param int $team_id
-     */
-    public function setTeamId(int $team_id): void
-    {
-        $this->team_id = $team_id;
     }
 
     /**
