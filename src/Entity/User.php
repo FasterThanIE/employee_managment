@@ -79,8 +79,7 @@ class User implements UserInterface
 
     /**
      * @var UserInfo
-     * @ORM\OneToOne(targetEntity="UserInfo", mappedBy="user")
-     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
+     * @ORM\OneToOne(targetEntity="UserInfo", mappedBy="user", cascade={"persist"})
      */
     private $userInfo;
 
