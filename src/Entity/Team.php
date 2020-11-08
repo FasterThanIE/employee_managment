@@ -32,32 +32,9 @@ class Team
      */
     private $createdOn;
 
-    /**
-     * @var TeamRoles
-     * @ORM\OneToMany(targetEntity="TeamRoles", mappedBy="team")
-     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
-     */
-    private $roles;
-
     public function __construct()
     {
         $this->createdOn = new DateTime();
-    }
-
-    /**
-     * @return TeamRoles
-     */
-    public function getRoles(): TeamRoles
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param TeamRoles $roles
-     */
-    public function setRoles(TeamRoles $roles): void
-    {
-        $this->roles = $roles;
     }
 
     /**
