@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidMemberRoleException;
 use App\Form\NewTeamFormType;
@@ -21,9 +22,28 @@ class TeamController extends AbstractController
      * @Route("/teams/apply_for_a_team", name="teams_apply")
      * @param Request $request
      * @return JsonResponse
+     * @IsGranted("ROLE_PENDING")
      */
     public function applyForATeam(Request $request): JsonResponse
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $userRequests = $em->getRepository(TeamMemberRequests::class)->findOneBy(['userId' => $this->getUser()->getId()]);
+        $team = $em->getRepository(Team::class)->find(['id' => $request->get('team_id')]);
+
+        if($userRequests || !$team)
+        {
+            return new JsonResponse([
+                'success' => false,
+            ]);
+        }
+
+        $memberRequests = new TeamMemberRequests();
+        $memberRequests->setUser($this->getUser());
+        $memberRequests->setTeam($team);
+        $em->persist($memberRequests);
+        $em->flush();
+
 
         return new JsonResponse([
             'success' => true,
@@ -36,7 +56,6 @@ class TeamController extends AbstractController
      */
     public function showPendingMessage()
     {
-        // TODO: Needs a check if user is already in team
         return $this->render("pages/teams/no_team.twig");
     }
 

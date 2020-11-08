@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TeamMemberRequests;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +18,17 @@ class HomeController extends AbstractController
      */
     public function dashboard(): Response
     {
-        return $this->isGranted("ROLE_PENDING") ?
-            $this->render("pages/teams/no_team.twig"):
-            $this->render("pages/dashboard/home.twig");
+        if($this->isGranted("ROLE_PENDING"))
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $teamRequests = $em->getRepository(TeamMemberRequests::class)->findOneBy(['userId' => $this->getUser()->getId()]);
+
+            return $teamRequests ?
+                $this->render("pages/teams/pending_accept.twig", ['team' => $teamRequests->getTeam()]) :
+                $this->render("pages/teams/no_team.twig");
+        }
+
+        return $this->render("pages/dashboard/home.twig");
     }
 }

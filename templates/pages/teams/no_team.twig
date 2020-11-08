@@ -58,12 +58,17 @@
             });
 
             $(document).on('click', '.__team_apply', function (){
+                var id = $(this).attr('data-team-id');
                 $.ajax({
                     url: "{{ path('teams_apply') }}",
+                    data: {"team_id":id},
                     method: "POST",
                     success: function(data)
                     {
-                        console.log(data);
+                        if(data.success)
+                        {
+                            window.location.reload();
+                        }
                     }
                 })
             });
