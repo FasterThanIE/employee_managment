@@ -19,7 +19,6 @@ class RequestsController extends AbstractController
      */
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
         return $this->render("pages/dashboard/requests.twig");
     }
 
@@ -28,8 +27,6 @@ class RequestsController extends AbstractController
      */
     public function showNewRequest()
     {
-        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
-
         $domain = new Request();
         $domain->setCreatedOn(new \DateTime());
         $form = $this->createForm(NewRequestType::class, $domain);
@@ -44,7 +41,6 @@ class RequestsController extends AbstractController
      */
     public function showRequestHistory()
     {
-        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
 
         $em = $this->getDoctrine()->getManager();
 
@@ -58,13 +54,12 @@ class RequestsController extends AbstractController
     }
 
     /**
-     * @Route("/request/create_request", name="create_request", methods={"POST"})
+     * @Route("/requests/create_request", name="create_request", methods={"POST"})
      * @param SymfonyRequest $request
      * @return RedirectResponse
      */
     public function createNewRequest(SymfonyRequest $request)
     {
-        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
 
         $domain = new Request();
 

@@ -20,8 +20,6 @@ class UserController extends AbstractController
      */
     public function showSettings(SymfonyRequest $request)
     {
-        $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
-
         $form = $this->createForm(UserFormType::class, $this->getUser());
         $form->handleRequest($request);
 

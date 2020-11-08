@@ -1,6 +1,7 @@
 security:
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_NORMAL, ROLE_DEVELOPER]
+        ROLE_DEVELOPER: [ROLE_NORMAL]
 
     encoders:
         App\Entity\User:
@@ -38,5 +39,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - {path: ^/requests, roles: [IS_AUTHENTICATED_FULLY]}
-        - {path: ^/user, roles: [IS_AUTHENTICATED_FULLY]}
+        - {path: ^/requests, roles: ROLE_NORMAL}
+        - {path: ^/user, roles: ROLE_NORMAL}
+        - {path: ^/teams, roles: ROLE_NORMAL}

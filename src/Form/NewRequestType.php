@@ -30,7 +30,7 @@ class NewRequestType extends AbstractType
                 'choices' => array_combine(Request::VALID_TYPES,Request::VALID_TYPES),
             ])
             ->add('save', SubmitType::class)
-            ->setAction('/request/create_request')
+            ->setAction('/requests/create_request')
             ->setMethod("POST");
     }
 

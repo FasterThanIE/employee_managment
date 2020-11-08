@@ -40,11 +40,19 @@ class User implements UserInterface
      * Add any roles that you add to VALID_ROLES. This constant is used to check if ROLE is valid or not
      */
     const VALID_ROLES = [
-        self::USER_ROLE_NORMAL, self::USER_ROLE_ADMIN, self::USER_ROLE_DEVELOPER,
+        self::ROLE_ADMIN, self::ROLE_DEVELOPER, self::ROLE_NORMAL,
+        self::ROLE_PENDING,
     ];
-    const USER_ROLE_NORMAL      = "normal";
-    const USER_ROLE_ADMIN       = "administrator";
-    const USER_ROLE_DEVELOPER   = "developer";
+    const MAPPED_ROLES = [
+        self::ROLE_ADMIN => "ROLE_ADMIN",
+        self::ROLE_PENDING => "ROLE_PENDING",
+        self::ROLE_DEVELOPER => "ROLE_DEVELOPER",
+        self::ROLE_NORMAL => "ROLE_NORMAL",
+    ];
+    const ROLE_PENDING     = "pending";
+    const ROLE_NORMAL      = "normal";
+    const ROLE_ADMIN       = "administrator";
+    const ROLE_DEVELOPER   = "developer";
 
     /**
      * @ORM\Id
@@ -78,7 +86,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $type = self::USER_ROLE_NORMAL;
+    private $role = self::ROLE_PENDING;
 
     /**
      * @var UserInfo
@@ -221,26 +229,6 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType() : string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     * @throws InvalidUserRoleException
-     */
-    public function setType($type): void
-    {
-        if(!self::isValidRole($type))
-        {
-            throw new InvalidUserRoleException("Role ".$type." is not a valid role");
-        }
-        $this->type = $type;
-    }
 
     /**
      * @return int|null
@@ -256,9 +244,7 @@ class User implements UserInterface
     public function getRoles() : array
     {
         return [
-            self::USER_ROLE_NORMAL,
-            self::USER_ROLE_ADMIN,
-            self::USER_ROLE_DEVELOPER
+            self::MAPPED_ROLES[$this->getRole()]
         ];
     }
 
@@ -335,4 +321,26 @@ class User implements UserInterface
     {
         return $this->first_name." ".$this->last_name;
     }
+
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     * @throws InvalidUserRoleException
+     */
+    public function setRole(string $role): void
+    {
+        if(!self::isValidRole($role))
+        {
+            throw new InvalidUserRoleException("Invalid user role ".$role);
+        }
+        $this->role = $role;
+    }
+
 }
