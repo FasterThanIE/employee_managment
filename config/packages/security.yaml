@@ -1,7 +1,7 @@
 security:
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_NORMAL, ROLE_DEVELOPER]
-        ROLE_DEVELOPER: [ROLE_NORMAL]
+        ROLE_DEVELOPER: [ROLE_ADMIN]
+        ROLE_ADMIN: [ROLE_NORMAL, ROLE_DEVELOPER, ROLE_PENDING]
 
     encoders:
         App\Entity\User:
@@ -40,4 +40,3 @@ security:
     access_control:
         - {path: ^/requests, roles: ROLE_NORMAL}
         - {path: ^/user, roles: ROLE_NORMAL}
-        - {path: ^/teams, roles: ROLE_NORMAL}

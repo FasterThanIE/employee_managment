@@ -1,27 +1,34 @@
 
-<table class="table ">
-
-    <thead class="thead-dark">
-    <tr>
-        <th>id</th>
-        <td>Name</td>
-        <td>Created on</td>
-        <td>Action</td>
-    </tr>
-    </thead>
-
-    <thead class="thead-light">
-        {% for team in teams %}
-            <tr>
-                <td>{{ team.getId() }}</td>
-                <td>{{ team.getName() }}</td>
-                <td>{{ team.getCreatedOn().format('d-m-Y') }}</td>
-                <td>
-                    <button class="btn-primary btn">Apply</button>
-                </td>
-            </tr>
-        {% endfor %}
-    </thead>
-
-</table>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title ">Teams</h4>
+            <p class="card-category"> Here is the list of all teams. Click on "Apply" to join a team.</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="border: 0 solid red!important;">ID</th>
+                        <td class="font-weight-bold">Name</td>
+                        <td class="font-weight-bold">Action</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    {% for team in teams %}
+                        <tr>
+                            <td>{{ team.getId() }}</td>
+                            <td>{{ team.getName() }}</td>
+                            <td>
+                                <button data-team-id="{{ team.getId() }}" class="btn-primary btn __team_apply">Apply</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 

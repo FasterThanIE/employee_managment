@@ -1,22 +1,27 @@
-
-{{ form_start(form, {'attr': {'class':'__form_new_team'}}) }}
-
-    <div class="flex-column {{ success ? "d-none" : "d-flex" }}">
-        <div class="form-group">
-            {{ form_label(form.name, 'Enter the team name') }}
-            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">New team</h4>
+            <p class="card-category">Write the team name that you want to create.</p>
         </div>
-        <div class="form-group" id="some-custom-id">
-            {{ form_widget(form.save, {'attr': {'class': 'form-control __save_team'}}) }}
+        <div class="card-body">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-5">
+                        {% include "partials/forms/form_errors.twig" with {'form':form} %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group bmd-form-group">
+                            {{ form_label(form.name, 'Enter the team name', {attr:{'class':'bmd-label-floating'}}) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-right __save_team'}}) }}
+                <div class="clearfix"></div>
+            {{ form_end(form) }}
         </div>
     </div>
-
-    <div class="my-custom-class-for-errors">
-        {% if success %}
-            <p>You have successfully created a team.</p>
-        {% else %}
-            {{ form_errors(form) }}
-        {% endif %}
-    </div>
-
-{{ form_end(form) }}
+</div>

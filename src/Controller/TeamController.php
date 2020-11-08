@@ -16,6 +16,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TeamController extends AbstractController
 {
+
+    /**
+     * @Route("/teams/apply_for_a_team", name="teams_apply")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function applyForATeam(Request $request): JsonResponse
+    {
+
+        return new JsonResponse([
+            'success' => true,
+        ]);
+    }
+
     /**
      * @Route("/no_team", name="app_pending")
      * @IsGranted("ROLE_PENDING")
@@ -28,6 +42,7 @@ class TeamController extends AbstractController
 
     /**
      * @Route("/teams/show_all", name="teams_show_all")
+     * @IsGranted("ROLE_PENDING")
      */
     public function show_all()
     {
@@ -47,6 +62,7 @@ class TeamController extends AbstractController
      * @param Request $request
      * @return Response
      * @throws InvalidMemberRoleException
+     * @IsGranted("ROLE_PENDING")
      */
     public function new_team(Request $request)
     {
@@ -80,6 +96,7 @@ class TeamController extends AbstractController
 
     /**
      * @Route("/teams/my_team", name="team_my_team")
+     * @IsGranted("ROLE_NORMAL")
      */
     public function showTeam()
     {
