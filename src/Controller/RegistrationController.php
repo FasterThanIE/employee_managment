@@ -58,7 +58,6 @@ class RegistrationController extends AbstractController
 
             $userInfo = new UserInfo();
             $userInfo->setUser($user);
-            $userInfo->setTeamId(UserInfo::TEAM_NONE);
             $entityManager->persist($userInfo);
             $entityManager->flush();
 
