@@ -6,7 +6,6 @@ use App\Exceptions\InvalidMemberRoleException;
 use App\Repository\TeamMembersRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=TeamMembersRepository::class)
@@ -41,7 +40,7 @@ class TeamMembers
 
     /**
      * @var int
-     * @ORM\Column(name="user_id", type="integer", unique=true)
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
 
