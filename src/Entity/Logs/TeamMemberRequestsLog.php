@@ -34,6 +34,12 @@ class TeamMemberRequestsLog
     private $id;
 
     /**
+     * @var int
+     * @ORM\Column(name="request_id", type="integer")
+     */
+    private $requestId;
+
+    /**
      * @var DateTime
      * @ORM\Column(name="applied_on", type="datetime")
      */
@@ -41,7 +47,7 @@ class TeamMemberRequestsLog
 
     /**
      * @var DateTime
-     * @ORM\Column(name="updated_on", type="datetime")
+     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
      */
     private $updatedOn;
 
@@ -65,7 +71,7 @@ class TeamMemberRequestsLog
 
     /**
      * @var int
-     * @ORM\Column(name="updated_by", type="integer")
+     * @ORM\Column(name="updated_by", type="integer", nullable=true)
      */
     private $updatedBy;
 
@@ -193,5 +199,21 @@ class TeamMemberRequestsLog
     public function setUpdatedOn(DateTime $updatedOn): void
     {
         $this->updatedOn = $updatedOn;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestId(): int
+    {
+        return $this->requestId;
+    }
+
+    /**
+     * @param int $requestId
+     */
+    public function setRequestId(int $requestId): void
+    {
+        $this->requestId = $requestId;
     }
 }

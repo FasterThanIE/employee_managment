@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Logs\TeamMemberRequestsLog;
 use App\Entity\Team;
 use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidMemberRoleException;
+use App\Exceptions\InvalidRequestStatusException;
 use App\Form\NewTeamFormType;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,6 +26,7 @@ class TeamController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      * @IsGranted("ROLE_PENDING")
+     * @throws InvalidRequestStatusException
      */
     public function applyForATeam(Request $request): JsonResponse
     {
@@ -44,6 +48,14 @@ class TeamController extends AbstractController
         $em->persist($memberRequests);
         $em->flush();
 
+        $requestLog = new TeamMemberRequestsLog();
+        $requestLog->setUserId($this->getUser()->getId());
+        $requestLog->setTeamId($team->getId());
+        $requestLog->setAppliedOn(new DateTime());
+        $requestLog->setStatus(TeamMemberRequestsLog::STATUS_PENDING);
+        $requestLog->setRequestId($memberRequests->getId());
+        $em->persist($requestLog);
+        $em->flush();
 
         return new JsonResponse([
             'success' => true,
