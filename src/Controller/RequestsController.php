@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Request;
 use App\Form\NewRequestType;
-use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;

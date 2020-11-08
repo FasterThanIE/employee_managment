@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Security\Voter\StatusCheckVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

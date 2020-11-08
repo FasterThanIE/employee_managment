@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\UserFormType;
-use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
