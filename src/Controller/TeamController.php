@@ -8,6 +8,7 @@ use App\Exceptions\InvalidMemberRoleException;
 use App\Form\NewTeamFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,7 +81,15 @@ class TeamController extends AbstractController
      */
     public function showTeam()
     {
-        // TODO: Add data for users team.. Check if he has one
-        return $this->render('pages/teams/my_team.twig');
+        /** @var $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $userTeam = $em->getRepository(TeamMembers::class)->findOneBy([
+            'userId' => $this->getUser()->getId()
+        ]);
+
+        return $userTeam instanceof TeamMembers ?
+            $this->render('pages/teams/my_team.twig', ['team' => $userTeam->getTeam()]) :
+            new RedirectResponse("/dashboard");
     }
 }

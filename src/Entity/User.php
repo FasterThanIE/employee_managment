@@ -304,4 +304,12 @@ class User implements UserInterface
     {
         return in_array($status, self::VALID_STATUSES);
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->first_name." ".$this->last_name;
+    }
 }

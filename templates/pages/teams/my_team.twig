@@ -2,5 +2,33 @@
 
 {% block content %}
 
+    <p>ID: <span class="text-info font-weight-bold">{{ team.getId() }}</span></p>
+    <p>Name: <span class="text-info font-weight-bold">{{ team.getName() }}</span></p>
+    <p>Created On: <span class="text-info font-weight-bold">{{ team.getCreatedOn().format('d.m.Y') }}</span></p>
+
+    <h4>Members</h4>
+    <table class="table ">
+
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <td>Role</td>
+            <td>Joined</td>
+        </tr>
+        </thead>
+
+        <thead class="thead-light">
+        {% for member in team.getMembers() %}
+            <tr>
+                <td>{{ member.getUser().getName() }}</td>
+                <td>{{ member.getRole() }}</td>
+                <td>{{ member.getJoinedOn().format('d.m.Y') }}</td>
+            </tr>
+        {% endfor %}
+        </thead>
+
+    </table>
+
+
 
 {% endblock %}

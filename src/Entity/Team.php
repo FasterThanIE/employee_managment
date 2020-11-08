@@ -35,7 +35,6 @@ class Team
     private $createdOn;
 
     /**
-     * @var TeamMembers
      * @ORM\OneToMany(targetEntity="TeamMembers", mappedBy="team")
      * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
      */
@@ -93,5 +92,19 @@ class Team
     public function setCreatedOn(DateTime $createdOn): void
     {
         $this->createdOn = $createdOn;
+    }
+
+
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    /**
+     * @param TeamMembers $members
+     */
+    public function setMembers(TeamMembers $members): void
+    {
+        $this->members = $members;
     }
 }
