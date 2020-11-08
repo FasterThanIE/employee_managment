@@ -9,6 +9,7 @@ use App\Validator\AlreadyOwnsTeamValidator;
 
 /**
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
+ * @ORM\Table(name="teams")
  */
 class Team
 {
