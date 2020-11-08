@@ -75,12 +75,6 @@ class Request
     private $user_id;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $team_id;
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
@@ -88,20 +82,20 @@ class Request
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="created_on")
      */
     private $createdOn;
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="updated_on")
      */
     private $updatedOn;
 
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="updated_by")
      */
     private $updatedBy;
 
@@ -167,15 +161,15 @@ class Request
      */
     public function getTeamId(): int
     {
-        return $this->team_id;
+        return $this->teamId;
     }
 
     /**
-     * @param int $team_id
+     * @param int $teamId
      */
-    public function setTeamId(int $team_id): void
+    public function setTeamId(int $teamId): void
     {
-        $this->team_id = $team_id;
+        $this->teamId = $teamId;
     }
 
     /**

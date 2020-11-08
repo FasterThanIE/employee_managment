@@ -3,60 +3,70 @@
 {% block content %}
 
 
-    {% if app.request.get('message') %}
-        <h4 class="text-info">{{ app.request.get('message') }}</h4>
-        <hr>
-    {% endif %}
+    <div class="d-flex flex-column col-12">
 
-    <h4>Requests</h4>
+        {% if success is defined and success %}
+            <div class="col-6">
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="material-icons">close</i>
+                    </button>
+                    <span>
+                        <b> Success - </b> You have successfully created new request.
+                    </span>
+                </div>
+            </div>
+        {% endif %}
 
-    <div class="d-flex flex-wrap">
-        <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary __new_request">Make new request</button>
-        <button class="col-lg-3 col-12 m-1 ml-lg-1 btn btn-primary __view_old_requests">Show request history</button>
+        <div class="d-flex flex-wrap">
+            {% include "partials/forms/new_request.twig" with {'form':form} %}
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title ">Requests</h4>
+                    <p class="card-category"> Here is the list of all requests you have made</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th style="border: 0 solid red!important;">ID</th>
+                                    <td class="font-weight-bold">Start date</td>
+                                    <td class="font-weight-bold">End date</td>
+                                    <td class="font-weight-bold">Status</td>
+                                    <td class="font-weight-bold">Type</td>
+                                    <td class="font-weight-bold">Category</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                            {% for request in requests %}
+                                <tr>
+                                    <td>{{ request.getId() }}</td>
+                                    <td>{{ request.getStartDate().format('m.d.Y') }}</td>
+                                    <td>{{ request.getEndDate().format('m.d.Y') }}</td>
+
+                                    {% if request.getStatus() == "approved" %}
+                                        <td class="text-success font-weight-bold">{{ request.getStatus() }}</td>
+                                    {% elseif request.getStatus() == "denied" %}
+                                        <td class="text-danger font-weight-bold">{{ request.getStatus() }}</td>
+                                    {% else %}
+                                        <td class="text-warning font-weight-bold">{{ request.getStatus() }}</td>
+                                    {% endif %}
+
+                                    <td>{{ request.getType() }}</td>
+                                    <td class="text-primary">{{ request.getCategory() }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="__request_review"></div>
-
-    <script>
-        $(document).ready(function() {
-
-            {% if app.request.get('action') %}
-                {% if app.request.get('action') == "show_history" %}
-                    viewOldRequests();
-                {% endif %}
-            {% endif %}
-
-            $(".__new_request").click(function (){
-                showNewRequestForm();
-            });
-
-            $(".__view_old_requests").click(function () {
-                viewOldRequests();
-            });
-
-            function showNewRequestForm()
-            {
-                $.ajax({
-                    url: "/requests/new_request",
-                    success: function (data)
-                    {
-                        $(".__request_review").html(data);
-                    }
-                });
-            }
-
-            function viewOldRequests()
-            {
-                $.ajax({
-                    url: "/requests/history",
-                    success: function (data)
-                    {
-                        $(".__request_review").html(data);
-                    }
-                });
-            }
-
-        });
-    </script>
 
 {% endblock %}

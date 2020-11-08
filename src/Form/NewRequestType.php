@@ -17,11 +17,13 @@ class NewRequestType extends AbstractType
         $builder
             ->add('start_date', DateType::class, [
                 'years' => Request::getAllowedYears(),
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                'widget' => 'single_text',
             ])
             ->add('end_date', DateType::class, [
                 'years' => Request::getAllowedYears(),
-                'data' => new \DateTime("+1 day")
+                'data' => new \DateTime("+1 day"),
+                'widget' => 'single_text'
             ])
             ->add('category', ChoiceType::class, [
                 'choices' => array_combine(Request::VALID_CATEGORIES,Request::VALID_CATEGORIES),
@@ -30,7 +32,7 @@ class NewRequestType extends AbstractType
                 'choices' => array_combine(Request::VALID_TYPES,Request::VALID_TYPES),
             ])
             ->add('save', SubmitType::class)
-            ->setAction('/requests/create_request')
+            ->setAction('/requests')
             ->setMethod("POST");
     }
 

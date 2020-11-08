@@ -1,29 +1,47 @@
-{{ form_start(form) }}
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
+<div class="col-md-8">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">New request</h4>
+            <p class="card-category">Complete the data bellow to submit new holiday request</p>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-5">
+                        {% include "partials/forms/form_errors.twig" with {'form':form} %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group bmd-form-group">
+                            {{ form_label(form.start_date, 'Pick the start date of your holliday', {attr:{'class':'bmd-label-floating'}}) }}
+                            {{ form_widget(form.start_date, {'attr': {'class': 'task_field'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group bmd-form-group">
+                            {{ form_label(form.end_date, 'Pick the end date of your holliday', {attr:{'class':'bmd-label-floating'}}) }}
+                            {{ form_widget(form.end_date, {'attr': {'class': 'task_field'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group bmd-form-group">
+                            {{ form_label(form.category, 'Select the category from the list', {attr:{'class':'bmd-label-floating'}}) }}
+                            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group bmd-form-group">
+                            {{ form_label(form.type, 'Pick the type from the list', {attr:{'class':'bmd-label-floating'}}) }}
+                            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+                <div class="clearfix"></div>
+            {{ form_end(form) }}
+        </div>
     </div>
-
-    <div class="d-flex flex-column">
-        <hr>
-        <h4>Create new request</h4>
-        <div class="form-group">
-            {{ form_label(form.start_date, 'Please pick the start date') }}
-            {{ form_widget(form.start_date, {'attr': {'class': 'task_field'}}) }}
-        </div>
-        <div class="form-group" id="some-custom-id">
-            {{ form_label(form.end_date, 'Please pick the end date') }}
-            {{ form_widget(form.end_date, {'attr': {'class': 'task_field'}}) }}
-        </div>
-        <div class="form-group" id="some-custom-id">
-            {{ form_label(form.category, 'Please pick the category') }}
-            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="form-group" id="some-custom-id">
-            {{ form_label(form.type, 'Please pick the type') }}
-            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
-        </div>
-        <div class="form-group" id="some-custom-id">
-            {{ form_widget(form.save, {'attr': {'class': 'form-control'}}) }}
-        </div>
-    </div>
-{{ form_end(form) }}
+</div>
