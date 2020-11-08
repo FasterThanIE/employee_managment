@@ -102,6 +102,27 @@ class User implements UserInterface
     private $status = self::USER_STATUS_PENDING;
 
     /**
+     * @ORM\OneToOne(targetEntity="TeamMembers", mappedBy="user")
+     */
+    protected $teamMember;
+
+    /**
+     * @return mixed
+     */
+    public function getTeamMember()
+    {
+        return $this->teamMember;
+    }
+
+    /**
+     * @param mixed $teamMember
+     */
+    public function setTeamMember($teamMember): void
+    {
+        $this->teamMember = $teamMember;
+    }
+
+    /**
      * @return DateTime
      */
     public function getRegistrationDate(): DateTime
