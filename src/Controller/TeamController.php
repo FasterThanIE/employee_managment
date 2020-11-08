@@ -18,6 +18,7 @@ class TeamController extends AbstractController
 {
     /**
      * @Route("/no_team", name="app_pending")
+     * @IsGranted("ROLE_PENDING")
      */
     public function showPendingMessage()
     {
