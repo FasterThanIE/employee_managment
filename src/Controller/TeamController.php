@@ -6,6 +6,7 @@ use App\Entity\Team;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidMemberRoleException;
 use App\Form\NewTeamFormType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;

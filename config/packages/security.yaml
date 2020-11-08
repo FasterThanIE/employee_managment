@@ -21,7 +21,6 @@ security:
             anonymous: true
             lazy: true
             provider: users_in_memory
-            access_denied_handler: App\Security\Access\AccessDeniedHandler
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator

@@ -5,6 +5,7 @@
 </div>
 
 <div class="sidebar-wrapper">
+    {% if is_granted("ROLE_NORMAL") %}
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="{{ path('dashboard') }}">
@@ -25,19 +26,12 @@
                 <p>Settings</p>
             </a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_pending') }}">
-                <i class="fas fa-user-cog"></i>
-                <p>TEST for no_team</p>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_logout') }}">
-                <i class="fas fa-user-cog"></i>
-                <p>Logout</p>
-            </a>
-        </li>
     </ul>
+    {% endif %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_logout') }}">
+            <i class="fas fa-user-cog"></i>
+            <p>Logout</p>
+        </a>
+    </li>
 </div>

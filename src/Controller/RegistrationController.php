@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserInfo;
+use App\Exceptions\InvalidUserRoleException;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;
@@ -27,6 +28,12 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param LoginFormAuthenticator $authenticator
+     * @return Response
+     * @throws InvalidUserRoleException
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
@@ -45,7 +52,7 @@ class RegistrationController extends AbstractController
             $user->setRegistrationDate(new DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
-            $user->setRole();
+            $user->setRole(User::ROLE_PENDING);
             $entityManager->persist($user);
             $entityManager->flush();
 
