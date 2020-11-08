@@ -1,9 +1,43 @@
-<nav class="col-12 col-lg-3 list-style-none mt-lg-5 p-0">
-    <ul class="mt-5 p-0 p-lg-5 border-0 list-group-item fixed-lg-top col-12 col-lg-3">
-        <li class="list-group-item active"><i class="fas fa-home"></i> <a class="btn text-light" href="/dashboard">Dashboard</a></li>
-        <li class="list-group-item"><i class="far fa-file-alt"></i> <a class="btn text-dark" href="/requests">Requests</a></li>
-        <li class="list-group-item"><i class="fas fa-user-cog"></i> <a class="btn text-dark" href="/user/settings">Settings</a></li>
-        <li class="list-group-item"><i class="fas fa-user-cog"></i> <a class="btn text-dark" href="/no_team">TEST for no_team</a></li>
-        <li class="list-group-item"><i class="fas fa-sign-out-alt"></i> <a class="btn text-dark" href="/logout">Logout</a></li>
+<div class="logo">
+    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        Creative Tim
+    </a>
+</div>
+
+<div class="sidebar-wrapper">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('dashboard') }}">
+                <i class="fas fa-home"></i>
+                <p>Dashboard</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('requests') }}">
+                <i class="far fa-file-alt"></i>
+                <p>Requests</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('user_settings_show') }}">
+                <i class="fas fa-user-cog"></i>
+                <p>Settings</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_pending') }}">
+                <i class="fas fa-user-cog"></i>
+                <p>TEST for no_team</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_logout') }}">
+                <i class="fas fa-user-cog"></i>
+                <p>Logout</p>
+            </a>
+        </li>
     </ul>
-</nav>
+</div>

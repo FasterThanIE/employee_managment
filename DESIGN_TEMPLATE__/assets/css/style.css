@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.min100VH {
+    min-height: 100vh!important;
+}
+
+@media only screen and (min-width: 992px)
+{
+    .fixed-lg-top {
+        position: fixed!important;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
