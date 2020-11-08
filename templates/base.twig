@@ -20,13 +20,20 @@
 
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        <div class="wrapper ">
+    <body style="background-color: #eee!important;">
+        <div class="wrapper">
             <div class="sidebar" data-color="azure" data-background-color="white" data-image="/img/sidebar-1.jpg">
                 {% include "partials/dashboard/navigation.twig" %}
             </div>
             <div class="main-panel">
-                {% block content %}{% endblock %}
+                {% include "partials/dashboard/top_nav.twig" %}
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
