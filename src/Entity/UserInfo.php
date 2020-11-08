@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Exceptions\InvalidContractRoleException;
 use App\Repository\UserInfoRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -347,9 +348,14 @@ class UserInfo
 
     /**
      * @param string $contract_type
+     * @throws InvalidContractRoleException
      */
     public function setContractType(string $contract_type): void
     {
+        if(!$this->isValidContract($contract_type))
+        {
+            throw new InvalidContractRoleException("Invalid contract type ".$contract_type);
+        }
         $this->contract_type = $contract_type;
     }
 
