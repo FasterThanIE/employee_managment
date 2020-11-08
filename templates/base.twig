@@ -12,21 +12,23 @@
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
 
         <!-- CSS Files -->
-        <link href="{{ asset('css/material-dashboard.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/material-dashboard.min.css') }}?v=2.1.2" rel="stylesheet" />
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/all.min.css') }}" />
 
         {% block stylesheets %}{% endblock %}
     </head>
     <body style="background-color: #eee!important;">
         <div class="wrapper">
-            <div class="sidebar" data-color="azure" data-background-color="white" data-image="/img/sidebar-1.jpg">
-                {% include "partials/dashboard/navigation.twig" %}
-            </div>
-            <div class="main-panel">
-                {% include "partials/dashboard/top_nav.twig" %}
+            {% if app.user %}
+                <div class="sidebar" data-color="azure" data-background-color="white" data-image="/img/sidebar-1.jpg">
+                    {% include "partials/dashboard/navigation.twig" %}
+                </div>
+            {% endif %}
+            <div class="main-panel" style="{% if not app.user %}width: 100%;{% endif %}">
+                {% if app.user %}
+                    {% include "partials/dashboard/top_nav.twig" %}
+                {% endif %}
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">

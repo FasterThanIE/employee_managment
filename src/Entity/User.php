@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -53,11 +54,13 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="First name cannot be empty")
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $first_name;
 
     /**
+     * @Assert\NotBlank(message="Last name cannot be empty")
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $last_name;

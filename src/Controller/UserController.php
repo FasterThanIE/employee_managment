@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserFormType;
 use App\Security\Voter\StatusCheckVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -15,28 +15,14 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/settings", name="user_settings_show")
+     * @param SymfonyRequest $request
+     * @return RedirectResponse|Response
      */
-    public function showSettings()
+    public function showSettings(SymfonyRequest $request)
     {
         $this->denyAccessUnlessGranted(StatusCheckVoter::USER_PENDING,$this->getUser());
 
         $form = $this->createForm(UserFormType::class, $this->getUser());
-        return $this->render("pages/user/settings.twig",[
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/user/settings/save", name="user_settings_save", methods={"POST"})
-     * @param SymfonyRequest $request
-     * @return RedirectResponse
-     */
-    public function saveSettings(SymfonyRequest $request)
-    {
-        $domain = new User();
-
-        $form = $this->createForm(UserFormType::class, $domain);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -49,14 +35,11 @@ class UserController extends AbstractController
             $user->setLastName($data->getLastName());
             $em->persist($user);
             $em->flush();
-
-            return $this->redirectToRoute('user_settings_show',[
-                'message' => "You have saved your account.",
-            ]);
         }
 
-        return $this->redirectToRoute('user_settings_show',[
-            'message' => "There was an error while saving your account.",
+        return $this->render("pages/user/settings.twig",[
+            'form' => $form->createView(),
+            'errors' => $form->getErrors(),
         ]);
     }
 }

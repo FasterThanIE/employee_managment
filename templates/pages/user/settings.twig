@@ -1,30 +1,35 @@
 {% extends "pages/dashboard.twig" %}
 
 {% block content %}
-
-    {% if app.request.get('message') %}
-        <h4 class="text-info">{{ app.request.get('message') }}</h4>
-        <hr>
-    {% endif %}
-
-    {{ form_start(form) }}
-        <div class="my-custom-class-for-errors">
-            {{ form_errors(form) }}
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Edit Profile</h4>
+                <p class="card-category">Complete your profile</p>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-12 m-2">
+                            {% include "partials/forms/form_errors.twig" with {'form':form} %}
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group bmd-form-group">
+                                {{ form_label(form.first_name, 'First name', {attr:{'class':'bmd-label-floating'}}) }}
+                                {{ form_widget(form.first_name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group bmd-form-group">
+                                {{ form_label(form.last_name, 'Last name', {attr:{'class':'bmd-label-floating'}}) }}
+                                {{ form_widget(form.last_name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+                    <div class="clearfix"></div>
+                {{ form_end(form) }}
+            </div>
         </div>
-
-        <div class="d-flex flex-column">
-            <div class="form-group">
-                {{ form_label(form.first_name, 'First name') }}
-                {{ form_widget(form.first_name, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="form-group">
-                {{ form_label(form.last_name, 'Last name') }}
-                {{ form_widget(form.last_name, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="form-group" id="some-custom-id">
-                {{ form_widget(form.save, {'attr': {'class': 'form-control'}}) }}
-            </div>
-        </div>
-    {{ form_end(form) }}
-
+    </div>
 {% endblock %}

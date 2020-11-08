@@ -1,0 +1,9 @@
+<ul>
+    {% for children in form.children %}
+        {% if children.vars.errors is defined %}
+            {% for error in children.vars.errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul>
