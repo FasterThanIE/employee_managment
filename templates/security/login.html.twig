@@ -2,7 +2,7 @@
 
 {% block title %}Login | Employee Management{% endblock %}
 
-{% block body %}
+{% block content %}
 <div class="d-flex col-lg-12 justify-content-center align-items-center min100VH">
     <div class="col-12 col-lg-4 col-md-8 bg-light p-lg-5 p-2 border rounded">
         <form method="post">
@@ -18,27 +18,34 @@
 
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-            <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+            <div class="col-md-12">
+                <div class="form-group bmd-form-group">
+                    <label for="inputEmail" class="bmd-label-floating">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" required>
+            <div class="col-md-12">
+                <div class="form-group bmd-form-group">
+                    <label for="inputPassword" class="bmd-label-floating">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" required autofocus>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group bmd-form-group">
+                    <a href="{{ path('app_login') }}" class="btn btn-primary col-12" >Login</a>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group bmd-form-group">
+                    <h1 class="h3 mb-3 font-weight-normal">Dont have an account?</h1>
+                    <a href="{{ path('app_register') }}" class="btn btn-primary col-12" >Register</a>
+                </div>
             </div>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-            <div class="form-group">
-                <button class="btn btn-lg btn-primary form-control" type="submit">Sign in</button>
-            </div>
-
-            <div class="form-group">
-                <h1 class="h3 mb-3 font-weight-normal">Dont have an account?</h1>
-                <a href="/register" class="btn btn-lg text-light btn-primary form-control" type="submit">Register</a>
-            </div>
-
         </form>
     </div>
 </div>
