@@ -2,7 +2,7 @@
 
 {% block title %}Registration | Employee Management{% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="d-flex col-lg-12 justify-content-center align-items-center min100VH">
         <div class="col-12 col-lg-4 col-md-8 bg-light p-lg-5 p-2 border rounded">
 
@@ -36,11 +36,12 @@
                     {{ form_label(registrationForm.last_name, 'Last name') }}
                     {{ form_widget(registrationForm.last_name, {'attr': {'class': 'form-control'}}) }}
                 </div>
-                <div class="form-group">
+                <div class="form-group d-flex ">
                     {{ form_row(registrationForm.agreeTerms) }}
+                    <span class="ml-2"> By tickting the checkbox you aree to our terms and conditions</span>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary form-control">Register</button>
+                    <button type="submit" class="btn btn-primary col-12">Register</button>
                 </div>
             </div>
 
