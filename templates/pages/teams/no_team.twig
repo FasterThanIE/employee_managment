@@ -28,6 +28,29 @@
                 });
             });
 
+            $(".__create_team").click(function () {
+                $.ajax({
+                    url: "/teams/new",
+                    success: function (data)
+                    {
+                        $(".__request_review").html(data);
+                    }
+                });
+            });
+
+            $(document).on('click','.__save_team', function (e){
+                $.ajax({
+                    url: "/teams/new",
+                    method: "POST",
+                    data: $('.__form_new_team').serialize(),
+                    success: function (data)
+                    {
+                        $(".__request_review").html(data);
+                    }
+                });
+                e.preventDefault();
+            });
+
         });
     </script>
 

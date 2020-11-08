@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TeamsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\AlreadyOwnsTeamValidator;
 
 /**
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
@@ -17,6 +18,7 @@ class Team
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @App\Validator\AlreadyOwnsTeam
      */
     private $id;
 
@@ -31,6 +33,14 @@ class Team
      * @ORM\Column(type="datetime")
      */
     private $createdOn;
+
+    /**
+     * @var TeamMembers
+     * @ORM\OneToMany(targetEntity="TeamMembers", mappedBy="team")
+     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
+     */
+    protected $members;
+
 
     public function __construct()
     {
@@ -84,7 +94,4 @@ class Team
     {
         $this->createdOn = $createdOn;
     }
-
-
-
 }
