@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Log\TeamActionLog;
 use App\Entity\Logs\TeamMemberRequestsLog;
 use App\Entity\Team;
-use App\Entity\Log\TeamActionLog;
 use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidRequestStatusException;

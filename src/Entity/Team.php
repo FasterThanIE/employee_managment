@@ -7,7 +7,6 @@ use App\Exceptions\User\InvalidUserException;
 use App\Repository\TeamsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Validator\AlreadyOwnsTeamValidator;
 
 /**
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
