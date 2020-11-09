@@ -7,7 +7,6 @@ use App\Entity\Team;
 use App\Entity\Log\TeamActionLog;
 use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
-use App\Exceptions\InvalidMemberRoleException;
 use App\Exceptions\InvalidRequestStatusException;
 use App\Form\NewTeamFormType;
 use DateTime;
@@ -49,6 +48,7 @@ class TeamController extends AbstractController
         $em->persist($memberRequests);
         $em->flush();
 
+        // TODO: Handle TeamMemberRequestLog using the event listener. Ex: postUpdate? postPersist?
         $requestLog = new TeamMemberRequestsLog();
         $requestLog->setUserId($this->getUser()->getId());
         $requestLog->setTeamId($team->getId());
@@ -93,7 +93,6 @@ class TeamController extends AbstractController
      * @Route("/teams/new", name="teams_new")
      * @param Request $request
      * @return Response
-     * @throws InvalidMemberRoleException
      * @IsGranted("ROLE_PENDING")
      */
     public function new_team(Request $request)

@@ -27,6 +27,7 @@ class UserController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
 
+            // TODO: Needs user change log - do it with event listeners
             $user = $this->getUser();
             $user->setFirstName($data->getFirstName());
             $user->setLastName($data->getLastName());
