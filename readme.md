@@ -8,3 +8,4 @@ Please do not mind the frontend, I did not put too much effort into it. I plan t
 #Credits 
 - Tomislav Nikolic, project found & creator
 - "msg" by helping with statuses. https://stackoverflow.com/users/4782169
+- "CreativeTim" for the material-dashboard template https://github.com/creativetimofficial/material-dashboard
