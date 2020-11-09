@@ -52,6 +52,10 @@
                     success: function (data)
                     {
                         $(".__request_review").html(data);
+                        if(data.success)
+                        {
+                            window.location.reload();
+                        }
                     }
                 });
                 e.preventDefault();

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserInfo;
-use App\Exceptions\InvalidUserRoleException;
+use App\Exceptions\User\InvalidUserRoleException;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\LoginFormAuthenticator;

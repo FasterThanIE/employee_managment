@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Logs\TeamMemberRequestsLog;
 use App\Entity\Team;
+use App\Entity\Log\TeamActionLog;
 use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidMemberRoleException;
@@ -97,7 +98,6 @@ class TeamController extends AbstractController
      */
     public function new_team(Request $request)
     {
-        $success = false;
         $team = new Team();
         
         $form = $this->createForm(NewTeamFormType::class, $team);
@@ -107,21 +107,19 @@ class TeamController extends AbstractController
         {
             $entityManager = $this->getDoctrine()->getManager();
             $teamEntity = $form->getData();
+            $teamEntity->setUser($this->getUser());
+            $teamEntity->setAction(TeamActionLog::ACTION_CREATED);
+
             $entityManager->persist($teamEntity);
             $entityManager->flush();
 
-            $members = new TeamMembers();
-            $members->setTeam($teamEntity);
-            $members->setRole(TeamMembers::ROLE_FOUNDER);
-            $members->setUser($this->getUser());
-            $entityManager->persist($members);
-            $entityManager->flush();
-            $success = true;
+            return new JsonResponse([
+                'success' => true
+            ]);
         }
 
         return $this->render('partials/forms/new_team.twig', [
             'form' => $form->createView(),
-            'success' => $success
         ]);
     }
 

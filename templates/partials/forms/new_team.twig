@@ -5,7 +5,7 @@
             <p class="card-category">Write the team name that you want to create.</p>
         </div>
         <div class="card-body">
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr':{'class':'__form_new_team'}}) }}
                 <div class="row">
                     <div class="col-md-5">
                         {% include "partials/forms/form_errors.twig" with {'form':form} %}

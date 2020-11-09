@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Exceptions\InvalidUserRoleException;
-use App\Exceptions\InvalidUserStatusException;
+use App\Exceptions\User\InvalidUserRoleException;
+use App\Exceptions\User\InvalidUserStatusException;
 use App\Repository\UsersRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Exceptions\Teams\InvalidActionException;
+use App\Exceptions\User\InvalidUserException;
 use App\Repository\TeamsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +12,7 @@ use App\Validator\AlreadyOwnsTeamValidator;
 /**
  * @ORM\Entity(repositoryClass=TeamsRepository::class)
  * @ORM\Table(name="teams")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Team
 {
@@ -41,10 +44,53 @@ class Team
      */
     protected $members;
 
+    /**
+     * Not inserted into DB, user for the event listeners
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var string
+     */
+    private $action;
+
 
     public function __construct()
     {
         $this->createdOn = new DateTime();
+    }
+
+    /**
+     * @throws InvalidActionException
+     * @throws InvalidUserException
+     */
+    public function prePersist()
+    {
+        if(!$this->getUser() instanceof User)
+        {
+            throw new InvalidUserException("Invalid user when creating a team. Please set a user when making new team");
+        }
+        if(!$this->getAction())
+        {
+            throw new InvalidActionException("Action must be set when persisting a team. Check TeamActionLog for actions");
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param string $action
+     */
+    public function setAction(string $action): void
+    {
+        $this->action = $action;
     }
 
     /**
@@ -107,5 +153,21 @@ class Team
     public function setMembers(TeamMembers $members): void
     {
         $this->members = $members;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }
