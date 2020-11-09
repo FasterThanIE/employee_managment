@@ -8,4 +8,5 @@
 /var/
 /vendor/
 /.idea/
+/DESIGN_TEMPLATE__/
 ###< symfony/framework-bundle ###
