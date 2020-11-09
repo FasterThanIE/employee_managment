@@ -80,7 +80,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user) : bool
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         $encoder = $this->encoderFactory->getEncoder($user);
         return $encoder->isPasswordValid($user->getPassword(), $credentials['password'], $user->getSalt());

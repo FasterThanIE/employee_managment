@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Request;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -17,19 +18,19 @@ class NewRequestType extends AbstractType
         $builder
             ->add('start_date', DateType::class, [
                 'years' => Request::getAllowedYears(),
-                'data' => new \DateTime(),
+                'data' => new DateTime(),
                 'widget' => 'single_text',
             ])
             ->add('end_date', DateType::class, [
                 'years' => Request::getAllowedYears(),
-                'data' => new \DateTime("+1 day"),
+                'data' => new DateTime("+1 day"),
                 'widget' => 'single_text'
             ])
             ->add('category', ChoiceType::class, [
-                'choices' => array_combine(Request::VALID_CATEGORIES,Request::VALID_CATEGORIES),
+                'choices' => array_combine(Request::VALID_CATEGORIES, Request::VALID_CATEGORIES),
             ])
             ->add('type', ChoiceType::class, [
-                'choices' => array_combine(Request::VALID_TYPES,Request::VALID_TYPES),
+                'choices' => array_combine(Request::VALID_TYPES, Request::VALID_TYPES),
             ])
             ->add('save', SubmitType::class)
             ->setAction('/requests')

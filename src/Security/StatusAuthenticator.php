@@ -17,7 +17,7 @@ class StatusAuthenticator implements AccessDecisionManagerInterface
      */
     public function decide(TokenInterface $token, array $attributes, $object = null)
     {
-        if($token->getUser()->getStatus() == User::USER_STATUS_PENDING) {
+        if ($token->getUser()->getStatus() == User::USER_STATUS_PENDING) {
             // Needs to be redirected to /pending
             return true;
         }

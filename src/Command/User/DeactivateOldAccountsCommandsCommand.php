@@ -32,11 +32,10 @@ class DeactivateOldAccountsCommandsCommand extends Command
 
         $users = $em->getRepository(User::class)->getUsersOlderThan(User::INVALID_ACCOUNT_AFTER);
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $user->setStatus(User::USER_STATUS_INACTIVE);
             $em->persist($user);
-            $output->writeln("User ".$user->getId()." has been deactivated due to inactivity.");
+            $output->writeln("User " . $user->getId() . " has been deactivated due to inactivity.");
         }
 
         $em->flush();

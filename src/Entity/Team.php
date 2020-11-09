@@ -17,6 +17,11 @@ class Team
 {
 
     /**
+     * @ORM\OneToMany(targetEntity="TeamMembers", mappedBy="team")
+     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
+     */
+    protected $members;
+    /**
      * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,25 +29,16 @@ class Team
      * @App\Validator\AlreadyOwnsTeam
      */
     private $id;
-
     /**
      * @var string
      * @ORM\Column(type="string", name="name", length=128, unique=true)
      */
     private $name;
-
     /**
      * @var DateTime
      * @ORM\Column(type="datetime")
      */
     private $createdOn;
-
-    /**
-     * @ORM\OneToMany(targetEntity="TeamMembers", mappedBy="team")
-     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
-     */
-    protected $members;
-
     /**
      * Not inserted into DB, user for the event listeners
      * @var User
@@ -66,14 +62,28 @@ class Team
      */
     public function prePersist()
     {
-        if(!$this->getUser() instanceof User)
-        {
+        if (!$this->getUser() instanceof User) {
             throw new InvalidUserException("Invalid user when creating a team. Please set a user when making new team");
         }
-        if(!$this->getAction())
-        {
+        if (!$this->getAction()) {
             throw new InvalidActionException("Action must be set when persisting a team. Check TeamActionLog for actions");
         }
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 
     /**
@@ -140,7 +150,6 @@ class Team
         $this->createdOn = $createdOn;
     }
 
-
     public function getMembers()
     {
         return $this->members;
@@ -152,21 +161,5 @@ class Team
     public function setMembers(TeamMembers $members): void
     {
         $this->members = $members;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
     }
 }

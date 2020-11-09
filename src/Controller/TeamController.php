@@ -35,8 +35,7 @@ class TeamController extends AbstractController
         $userRequests = $em->getRepository(TeamMemberRequests::class)->findOneBy(['userId' => $this->getUser()->getId()]);
         $team = $em->getRepository(Team::class)->find(['id' => $request->get('team_id')]);
 
-        if($userRequests || !$team)
-        {
+        if ($userRequests || !$team) {
             return new JsonResponse([
                 'success' => false,
             ]);
@@ -98,12 +97,11 @@ class TeamController extends AbstractController
     public function new_team(Request $request)
     {
         $team = new Team();
-        
+
         $form = $this->createForm(NewTeamFormType::class, $team);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $teamEntity = $form->getData();
             $teamEntity->setUser($this->getUser());

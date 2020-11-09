@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Request;
 use App\Form\NewRequestType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,28 +26,27 @@ class RequestsController extends AbstractController
         );
 
         $domain = new Request();
-        $domain->setCreatedOn(new \DateTime());
+        $domain->setCreatedOn(new DateTime());
         $form = $this->createForm(NewRequestType::class, $domain);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
             $data->setUserId($this->getUser()->getId());
-            $data->setCreatedOn(new \DateTime());
+            $data->setCreatedOn(new DateTime());
             $data->setUpdatedBy($this->getUser()->getId());
             $em->persist($data);
             $em->flush();
 
-            return $this->render("pages/dashboard/requests.twig",[
+            return $this->render("pages/dashboard/requests.twig", [
                 'requests' => $requests,
                 'form' => $form->createView(),
                 'success' => true,
             ]);
         }
 
-        return $this->render("pages/dashboard/requests.twig",[
+        return $this->render("pages/dashboard/requests.twig", [
             'requests' => $requests,
             'form' => $form->createView(),
             'success' => false,

@@ -20,9 +20,9 @@ class TeamMemberRequestsLog
     const VALID_STATUSES = [
         self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_REJECTED,
     ];
-    const STATUS_PENDING    = "pending";
-    const STATUS_APPROVED   = "approved";
-    const STATUS_REJECTED   = "rejected";
+    const STATUS_PENDING = "pending";
+    const STATUS_APPROVED = "approved";
+    const STATUS_REJECTED = "rejected";
 
 
     /**
@@ -153,11 +153,19 @@ class TeamMemberRequestsLog
      */
     public function setStatus(string $status): void
     {
-        if(!self::isValidStatus($status))
-        {
-            throw new InvalidRequestStatusException("Invalid request status ".$status);
+        if (!self::isValidStatus($status)) {
+            throw new InvalidRequestStatusException("Invalid request status " . $status);
         }
         $this->status = $status;
+    }
+
+    /**
+     * @param string $status
+     * @return bool
+     */
+    public static function isValidStatus(string $status): bool
+    {
+        return in_array($status, self::VALID_STATUSES);
     }
 
     /**
@@ -174,15 +182,6 @@ class TeamMemberRequestsLog
     public function setUpdatedBy(int $updatedBy): void
     {
         $this->updatedBy = $updatedBy;
-    }
-
-    /**
-     * @param string $status
-     * @return bool
-     */
-    public static function isValidStatus(string $status): bool
-    {
-        return in_array($status, self::VALID_STATUSES);
     }
 
     /**

@@ -12,44 +12,39 @@ use Doctrine\ORM\Mapping as ORM;
 class TeamMemberRequests
 {
     /**
+     * @var User
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    /**
      * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @var DateTime
      * @ORM\Column(name="applied_on", type="datetime")
      */
     private $appliedOn;
-
     /**
      * @var int
      * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
-
     /**
      * @var int
      * @ORM\Column(name="team_id", type="integer")
      */
     private $teamId;
-
     /**
      * @var Team
      * @ORM\OneToOne(targetEntity="Team")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      */
     private $team;
-
-    /**
-     * @var User
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
 
     public function __construct()
     {

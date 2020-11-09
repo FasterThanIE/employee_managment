@@ -20,10 +20,10 @@ class TeamActionLog
         self::ACTION_CREATED, self::ACTION_ARCHIVED, self::ACTION_DELETED,
         self::ACTION_RENAMED,
     ];
-    const ACTION_CREATED        = "created";
-    const ACTION_DELETED        = "deleted";
-    const ACTION_ARCHIVED       = "archived";
-    const ACTION_RENAMED        = "banned";
+    const ACTION_CREATED = "created";
+    const ACTION_DELETED = "deleted";
+    const ACTION_ARCHIVED = "archived";
+    const ACTION_RENAMED = "banned";
 
     /**
      * @var int

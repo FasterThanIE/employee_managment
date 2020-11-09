@@ -18,8 +18,7 @@ class HomeController extends AbstractController
      */
     public function dashboard(): Response
     {
-        if($this->isGranted("ROLE_PENDING"))
-        {
+        if ($this->isGranted("ROLE_PENDING")) {
             $em = $this->getDoctrine()->getManager();
 
             $teamRequests = $em->getRepository(TeamMemberRequests::class)->findOneBy(['userId' => $this->getUser()->getId()]);

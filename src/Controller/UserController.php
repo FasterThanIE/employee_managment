@@ -22,8 +22,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserFormType::class, $this->getUser());
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $data = $form->getData();
 
@@ -35,7 +34,7 @@ class UserController extends AbstractController
             $em->flush();
         }
 
-        return $this->render("pages/user/settings.twig",[
+        return $this->render("pages/user/settings.twig", [
             'form' => $form->createView(),
             'errors' => $form->getErrors(),
         ]);

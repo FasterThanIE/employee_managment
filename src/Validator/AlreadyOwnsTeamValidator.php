@@ -38,8 +38,7 @@ class AlreadyOwnsTeamValidator extends ConstraintValidator
             'userId' => $userId
         ]);
 
-        if($team)
-        {
+        if ($team) {
             $constraint->message = "You already own a team or you are part of one";
             $this->context->buildViolation($constraint->message)->addViolation();
         }

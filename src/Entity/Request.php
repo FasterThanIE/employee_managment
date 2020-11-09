@@ -23,9 +23,9 @@ class Request
     const VALID_STATUSES = [
         self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_REJECTED,
     ];
-    const STATUS_PENDING    = "pending";
-    const STATUS_APPROVED   = "approved";
-    const STATUS_REJECTED   = "rejected";
+    const STATUS_PENDING = "pending";
+    const STATUS_APPROVED = "approved";
+    const STATUS_REJECTED = "rejected";
 
 
     /**
@@ -39,15 +39,15 @@ class Request
         self::TYPE_HOLIDAYS, self::TYPE_MILITARY_LEAVE, self::TYPE_BEREAVEMENT,
     ];
 
-    const TYPE_VACATION             = "vacation";
-    const TYPE_SICK_LEAVE           = "sick";
-    const TYPE_PARENTAL_LEAVE       = "parental";
-    const TYPE_JURY_DUTY            = "jury_duty";
-    const TYPE_PERSONAL_TIME        = "personal";
-    const TYPE_VOTING               = "voting";
-    const TYPE_HOLIDAYS             = "holidays";
-    const TYPE_MILITARY_LEAVE       = "military";
-    const TYPE_BEREAVEMENT          = "bereavement"; // ex: Incase of death of a family member etc..
+    const TYPE_VACATION = "vacation";
+    const TYPE_SICK_LEAVE = "sick";
+    const TYPE_PARENTAL_LEAVE = "parental";
+    const TYPE_JURY_DUTY = "jury_duty";
+    const TYPE_PERSONAL_TIME = "personal";
+    const TYPE_VOTING = "voting";
+    const TYPE_HOLIDAYS = "holidays";
+    const TYPE_MILITARY_LEAVE = "military";
+    const TYPE_BEREAVEMENT = "bereavement"; // ex: Incase of death of a family member etc..
 
     /**
      * ==========================================
@@ -57,8 +57,8 @@ class Request
     const VALID_CATEGORIES = [
         self::PAID_LEAVE, self::UNPAID_LEAVE,
     ];
-    const PAID_LEAVE                = "paid";
-    const UNPAID_LEAVE              = "unpaid";
+    const PAID_LEAVE = "paid";
+    const UNPAID_LEAVE = "unpaid";
 
 
     /**
@@ -123,6 +123,19 @@ class Request
      * @ORM\Column(type="datetime", name="end_date")
      */
     private $endDate;
+
+    /**
+     * @return array
+     */
+    public static function getAllowedYears(): array
+    {
+        // TODO: Add so he can see next year ONLY if his contract lasts until then
+        return [
+            date('Y'),
+            date('Y', strtotime("-1 year")),
+            date('Y', strtotime("+1 year"))
+        ];
+    }
 
     /**
      * @return int
@@ -242,9 +255,8 @@ class Request
      */
     public function setType(string $type): void
     {
-        if(!self::isValidType($type))
-        {
-            throw new InvalidTypeException("Invalid type encountered ".$type);
+        if (!self::isValidType($type)) {
+            throw new InvalidTypeException("Invalid type encountered " . $type);
         }
         $this->type = $type;
     }
@@ -253,7 +265,7 @@ class Request
      * @param string $type
      * @return bool
      */
-    public static function isValidType(string $type) : bool
+    public static function isValidType(string $type): bool
     {
         return in_array($type, self::VALID_TYPES);
     }
@@ -272,13 +284,11 @@ class Request
      */
     public function setCategory(string $category): void
     {
-        if(!self::isValidCategory($category))
-        {
-            throw new InvalidCategoryException("Invalid category encountered ".$category);
+        if (!self::isValidCategory($category)) {
+            throw new InvalidCategoryException("Invalid category encountered " . $category);
         }
         $this->category = $category;
     }
-
 
     /**
      * @param string $category
@@ -319,19 +329,6 @@ class Request
     public function setEndDate(DateTime $endDate): void
     {
         $this->endDate = $endDate;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getAllowedYears(): array
-    {
-        // TODO: Add so he can see next year ONLY if his contract lasts until then
-        return [
-            date('Y'),
-            date('Y', strtotime("-1 year")),
-            date('Y', strtotime("+1 year"))
-        ];
     }
 
 

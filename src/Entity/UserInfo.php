@@ -346,11 +346,19 @@ class UserInfo
      */
     public function setContractType(string $contract_type): void
     {
-        if(!$this->isValidContract($contract_type))
-        {
-            throw new InvalidContractRoleException("Invalid contract type ".$contract_type);
+        if (!$this->isValidContract($contract_type)) {
+            throw new InvalidContractRoleException("Invalid contract type " . $contract_type);
         }
         $this->contract_type = $contract_type;
+    }
+
+    /**
+     * @param string $contract
+     * @return bool
+     */
+    public function isValidContract(string $contract): bool
+    {
+        return in_array($contract, self::VALID_CONTRACTS);
     }
 
     /**
@@ -384,15 +392,6 @@ class UserInfo
     {
         $this->user = $user;
         $this->setUserId($user->getId());
-    }
-
-    /**
-     * @param string $contract
-     * @return bool
-     */
-    public function isValidContract(string $contract) : bool
-    {
-        return in_array($contract, self::VALID_CONTRACTS);
     }
 
 

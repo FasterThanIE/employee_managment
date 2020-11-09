@@ -18,7 +18,6 @@ class NewTeamFormType extends AbstractType
             ->add('save', SubmitType::class)
             ->setMethod('POST')
             ->setAction('/teams/new');
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -21,55 +21,47 @@ class TeamMembers
     const VALID_ROLES = [
         self::ROLE_MEMBER, self::ROLE_ADMINISTRATOR, self::ROLE_FOUNDER
     ];
-    const ROLE_MEMBER           = "member";
-    const ROLE_ADMINISTRATOR    = "admin";
-    const ROLE_FOUNDER          = "founder";
-
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @var int
-     * @ORM\Column(name="team_id", type="integer")
-     */
-    private $teamId;
-
-    /**
-     * @var int
-     * @ORM\Column(name="user_id", type="integer")
-     */
-    private $userId;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(name="joined_on", type="datetime")
-     */
-    private $joinedOn;
-
-    /**
-     * @var string
-     * @ORM\Column(name="role", type="string", length=20)
-     */
-    private $role;
-
+    const ROLE_MEMBER = "member";
+    const ROLE_ADMINISTRATOR = "admin";
+    const ROLE_FOUNDER = "founder";
     /**
      * @var Team
      * @ORM\ManyToOne(targetEntity="Team", inversedBy="members")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      */
     protected $team;
-
     /**
      * @var User
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    /**
+     * @var int
+     * @ORM\Column(name="team_id", type="integer")
+     */
+    private $teamId;
+    /**
+     * @var int
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    private $userId;
+    /**
+     * @var DateTime
+     * @ORM\Column(name="joined_on", type="datetime")
+     */
+    private $joinedOn;
+    /**
+     * @var string
+     * @ORM\Column(name="role", type="string", length=20)
+     */
+    private $role;
 
     public function __construct()
     {
@@ -90,11 +82,19 @@ class TeamMembers
      */
     public function setRole(string $role): void
     {
-        if(!self::isValidRole($role))
-        {
-            throw new InvalidMemberRoleException("Invalid role used ".$role);
+        if (!self::isValidRole($role)) {
+            throw new InvalidMemberRoleException("Invalid role used " . $role);
         }
         $this->role = $role;
+    }
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public static function isValidRole(string $role): bool
+    {
+        return in_array($role, self::VALID_ROLES);
     }
 
     /**
@@ -143,15 +143,6 @@ class TeamMembers
     public function setUserId(int $userId): void
     {
         $this->userId = $userId;
-    }
-
-    /**
-     * @param string $role
-     * @return bool
-     */
-    public static function isValidRole(string $role): bool
-    {
-        return in_array($role, self::VALID_ROLES);
     }
 
     /**
