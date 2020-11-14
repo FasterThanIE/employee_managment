@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    env(MONGODB_URL):
+    env(MONGODB_DB):
 
 services:
     # default configuration for services in *this* file
@@ -33,7 +35,28 @@ services:
                 name: 'doctrine.event_listener'
                 event: 'postPersist'
                 priority: 500
-                conntection: 'default'
+                connection: 'default'
+                entity: "App\\Entity\\Team"
+
+
+    App\EventListeners\TeamRequests\TeamMembersPreRemoveEventListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'preRemove'
+                priority: 500
+                connection: default
+                entity: "App\\Entity\\TeamMembers"
+
+    App\EventListeners\User\UserOnFlushEventListener:
+        tags:
+            -
+                name: 'doctrine.event_listener'
+                event: 'onFlush'
+                priority: 500
+                connection: default
+                entity: "App\\Entity\\User"
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
