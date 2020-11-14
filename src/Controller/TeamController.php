@@ -148,7 +148,7 @@ class TeamController extends AbstractController
         return $userTeam instanceof TeamMembers ?
             $this->render('pages/teams/my_team.twig', [
                 'team' => $userTeam->getTeam(),
-                'editor' =>  in_array($userTeam->getRole(), TeamMembers::EDITOR_ROLES),
+                'editor' => in_array($userTeam->getRole(), TeamMembers::EDITOR_ROLES),
             ]) :
             new RedirectResponse("/dashboard");
     }
@@ -159,14 +159,14 @@ class TeamController extends AbstractController
      *     name="team_remove_member",
      *     methods={"POST"},
      *     requirements={"user_id" = "\d+", "team_id" = "\d+", "x"="\d+"}
-    * )
+     * )
      * @IsGranted("ROLE_NORMAL")
      * @param Request $request
      * @return JsonResponse
      */
     public function removeMember(Request $request, int $userId, int $teamId): JsonResponse
     {
-        if($userId == $this->getUser()->getId()) {
+        if ($userId == $this->getUser()->getId()) {
             return new JsonResponse([
                 'success' => false,
                 'message' => "You cannot remove yourself from a team"
@@ -179,7 +179,7 @@ class TeamController extends AbstractController
             'teamId' => $teamId
         ]);
 
-        if(!in_array($teamMember->getRole(), TeamMembers::EDITOR_ROLES)) {
+        if (!in_array($teamMember->getRole(), TeamMembers::EDITOR_ROLES)) {
             return new JsonResponse([
                 'success' => false,
                 'message' => "You don't have permission to edit this team."
@@ -191,15 +191,14 @@ class TeamController extends AbstractController
             'teamId' => $teamId
         ]);
 
-        if(!$requestingMember) {
+        if (!$requestingMember) {
             return new JsonResponse([
                 'success' => false,
                 'message' => "This user is not part of this team."
             ]);
         }
 
-        if(in_array($requestingMember, TeamMembers::EDITOR_ROLES)  && $teamMember->getRole() != TeamMembers::ROLE_FOUNDER)
-        {
+        if (in_array($requestingMember, TeamMembers::EDITOR_ROLES) && $teamMember->getRole() != TeamMembers::ROLE_FOUNDER) {
             return new JsonResponse([
                 'success' => false,
                 'message' => "You cannot delete other editors unless you are a team founder/owner."

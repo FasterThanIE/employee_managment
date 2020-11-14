@@ -30,10 +30,8 @@ class UserOnFlushEventListener
         $em = $args->getEntityManager();
         $entities = $em->getUnitOfWork();
 
-        foreach ($entities->getScheduledEntityUpdates() as $entity)
-        {
-            if(!$entity instanceof User)
-            {
+        foreach ($entities->getScheduledEntityUpdates() as $entity) {
+            if (!$entity instanceof User) {
                 return;
             }
             $this->logData($entities, $entity);

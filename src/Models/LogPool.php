@@ -25,12 +25,29 @@ class LogPool
 
     public function __construct(array $data)
     {
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $this->setPoolData($key, $value[0], self::TYPE_OLD_DATA);
             $this->setPoolData($key, $value[1], self::TYPE_NEW_DATA);
             $this->addKey($key);
         }
+    }
+
+    /**
+     * @param string $key
+     * @param $value
+     * @param string $type
+     */
+    private function setPoolData(string $key, $value, string $type): void
+    {
+        $this->data[$key][$type] = $value;
+    }
+
+    /**
+     * @param string $key
+     */
+    private function addKey(string $key): void
+    {
+        $this->keys[] = $key;
     }
 
     /**
@@ -53,29 +70,11 @@ class LogPool
     }
 
     /**
-     * @param string $key
-     */
-    private function addKey(string $key): void
-    {
-        $this->keys[] = $key;
-    }
-
-    /**
      * @return array
      */
     public function getKeys(): array
     {
         return $this->keys;
-    }
-
-    /**
-     * @param string $key
-     * @param $value
-     * @param string $type
-     */
-    private function setPoolData(string $key, $value, string $type): void
-    {
-        $this->data[$key][$type] = $value;
     }
 
 

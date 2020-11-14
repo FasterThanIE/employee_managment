@@ -341,6 +341,27 @@ class UserInfo
     }
 
     /**
+     * @param string $contract_type
+     * @throws InvalidContractRoleException
+     */
+    public function setContractType(string $contract_type): void
+    {
+        if (!$this->isValidContract($contract_type)) {
+            throw new InvalidContractRoleException("Invalid contract type " . $contract_type);
+        }
+        $this->contract_type = $contract_type;
+    }
+
+    /**
+     * @param string $contract
+     * @return bool
+     */
+    public function isValidContract(string $contract): bool
+    {
+        return in_array($contract, self::VALID_CONTRACTS);
+    }
+
+    /**
      * @return mixed
      */
     public function getContractEndDate()
@@ -370,27 +391,6 @@ class UserInfo
     public function setUser(User $user): void
     {
         $this->user = $user;
-    }
-
-    /**
-     * @param string $contract_type
-     * @throws InvalidContractRoleException
-     */
-    public function setContractType(string $contract_type): void
-    {
-        if (!$this->isValidContract($contract_type)) {
-            throw new InvalidContractRoleException("Invalid contract type " . $contract_type);
-        }
-        $this->contract_type = $contract_type;
-    }
-
-    /**
-     * @param string $contract
-     * @return bool
-     */
-    public function isValidContract(string $contract): bool
-    {
-        return in_array($contract, self::VALID_CONTRACTS);
     }
 
 

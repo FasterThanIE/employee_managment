@@ -58,6 +58,14 @@ class UserLog
     }
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
     public function getType(): string
@@ -71,14 +79,6 @@ class UserLog
     public function setType(string $type): void
     {
         $this->type = $type;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

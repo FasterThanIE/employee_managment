@@ -29,8 +29,7 @@ class TeamMembersPreRemoveEventListener
     {
         $entity = $lifecycleEventArgs->getObject();
 
-        if(!$entity instanceof TeamMembers)
-        {
+        if (!$entity instanceof TeamMembers) {
             return;
         }
 

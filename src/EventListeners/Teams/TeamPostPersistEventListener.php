@@ -34,8 +34,7 @@ class TeamPostPersistEventListener
     {
         $entity = $event->getObject();
 
-        if(!$entity instanceof Team)
-        {
+        if (!$entity instanceof Team) {
             return;
         }
 
@@ -44,16 +43,6 @@ class TeamPostPersistEventListener
         $this->logAction($entity);
 
         $this->em->flush();
-    }
-
-    private function logAction(Team $team): void
-    {
-        $log = new TeamActionLog();
-        $log->setTeamId($team->getId());
-        $log->setAction($team->getAction());
-        $log->setActionBy($team->getUser()->getId());
-        $log->setActionDate(new DateTime());
-        $this->em->persist($log);
     }
 
     /**
@@ -79,6 +68,16 @@ class TeamPostPersistEventListener
         $members->setRole(TeamMembers::ROLE_FOUNDER);
         $members->setUser($team->getUser());
         $this->em->persist($members);
+    }
+
+    private function logAction(Team $team): void
+    {
+        $log = new TeamActionLog();
+        $log->setTeamId($team->getId());
+        $log->setAction($team->getAction());
+        $log->setActionBy($team->getUser()->getId());
+        $log->setActionDate(new DateTime());
+        $this->em->persist($log);
     }
 
 
