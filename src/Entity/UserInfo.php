@@ -391,6 +391,7 @@ class UserInfo
     public function setUser(User $user): void
     {
         $this->user = $user;
+        $this->user_id = $user->getId();
     }
 
 
