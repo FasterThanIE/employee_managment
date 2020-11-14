@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TeamMembersRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class TeamMembers
 {
@@ -24,6 +25,14 @@ class TeamMembers
     const ROLE_MEMBER = "member";
     const ROLE_ADMINISTRATOR = "admin";
     const ROLE_FOUNDER = "founder";
+
+    /**
+     * These are the roles that will be able to edit the team
+     */
+    const EDITOR_ROLES = [
+        self::ROLE_FOUNDER, self::ROLE_ADMINISTRATOR,
+    ];
+
     /**
      * @var Team
      * @ORM\ManyToOne(targetEntity="Team", inversedBy="members")

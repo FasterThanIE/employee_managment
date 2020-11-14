@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UsersRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  * @ORM\Table(name="users")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {

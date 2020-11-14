@@ -141,9 +141,9 @@ class UserInfo
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getDateOfBirth(): DateTime
+    public function getDateOfBirth(): ?DateTime
     {
         return $this->date_of_birth;
     }
@@ -157,9 +157,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getNationality(): string
+    public function getNationality(): ?string
     {
         return $this->nationality;
     }
@@ -173,9 +173,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReligiousHoliday(): string
+    public function getReligiousHoliday(): ?string
     {
         return $this->religious_holiday;
     }
@@ -189,9 +189,9 @@ class UserInfo
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getReligiousDate(): DateTime
+    public function getReligiousDate(): ?DateTime
     {
         return $this->religious_date;
     }
@@ -205,9 +205,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSchool(): string
+    public function getSchool(): ?string
     {
         return $this->school;
     }
@@ -221,9 +221,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -237,9 +237,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         return $this->address;
     }
@@ -253,9 +253,9 @@ class UserInfo
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCellphone(): int
+    public function getCellphone(): ?int
     {
         return $this->cellphone;
     }
@@ -269,9 +269,9 @@ class UserInfo
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getUniqueCitizenNumber(): int
+    public function getUniqueCitizenNumber(): ?int
     {
         return $this->unique_citizen_number;
     }
@@ -285,9 +285,9 @@ class UserInfo
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isMarried(): bool
+    public function isMarried(): ?bool
     {
         return $this->married;
     }
@@ -301,9 +301,9 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPartnerName(): string
+    public function getPartnerName(): ?string
     {
         return $this->partner_name;
     }
@@ -317,9 +317,9 @@ class UserInfo
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getKidsCount(): int
+    public function getKidsCount(): ?int
     {
         return $this->kids_count;
     }
@@ -333,32 +333,11 @@ class UserInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContractType(): string
+    public function getContractType(): ?string
     {
         return $this->contract_type;
-    }
-
-    /**
-     * @param string $contract_type
-     * @throws InvalidContractRoleException
-     */
-    public function setContractType(string $contract_type): void
-    {
-        if (!$this->isValidContract($contract_type)) {
-            throw new InvalidContractRoleException("Invalid contract type " . $contract_type);
-        }
-        $this->contract_type = $contract_type;
-    }
-
-    /**
-     * @param string $contract
-     * @return bool
-     */
-    public function isValidContract(string $contract): bool
-    {
-        return in_array($contract, self::VALID_CONTRACTS);
     }
 
     /**
@@ -391,7 +370,27 @@ class UserInfo
     public function setUser(User $user): void
     {
         $this->user = $user;
-        $this->setUserId($user->getId());
+    }
+
+    /**
+     * @param string $contract_type
+     * @throws InvalidContractRoleException
+     */
+    public function setContractType(string $contract_type): void
+    {
+        if (!$this->isValidContract($contract_type)) {
+            throw new InvalidContractRoleException("Invalid contract type " . $contract_type);
+        }
+        $this->contract_type = $contract_type;
+    }
+
+    /**
+     * @param string $contract
+     * @return bool
+     */
+    public function isValidContract(string $contract): bool
+    {
+        return in_array($contract, self::VALID_CONTRACTS);
     }
 
 

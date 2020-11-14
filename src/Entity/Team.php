@@ -41,7 +41,7 @@ class Team
     private $createdOn;
     /**
      * Not inserted into DB, user for the event listeners
-     * @var User
+     * @var null|User
      */
     private $user;
 
@@ -71,9 +71,9 @@ class Team
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
