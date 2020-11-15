@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListeners\TeamRequests;
+namespace App\EventListeners\Teams;
 
 use App\Entity\TeamMembers;
 use App\Entity\User;

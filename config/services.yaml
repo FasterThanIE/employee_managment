@@ -39,7 +39,7 @@ services:
                 entity: "App\\Entity\\Team"
 
 
-    App\EventListeners\TeamRequests\TeamMembersPreRemoveEventListener:
+    App\EventListeners\Teams\TeamMembersPreRemoveEventListener:
         tags:
             -
                 name: 'doctrine.event_listener'
