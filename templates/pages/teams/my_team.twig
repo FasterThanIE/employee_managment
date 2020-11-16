@@ -5,12 +5,10 @@
     <div class="ml-md-3 d-flex flex-column">
         <h1 class="__response_msg"></h1>
         <h2>Team informations</h2>
-        <div class="ml-md-3">
-            <p>ID: <span class="text-info font-weight-bold">{{ team.getId() }}</span></p>
-            <p>Name: <span class="text-info font-weight-bold">{{ team.getName() }}</span></p>
-            <p>Created On: <span class="text-info font-weight-bold">{{ team.getCreatedOn().format('d.m.Y') }}</span></p>
-        </div>
     </div>
+
+
+    {% include "partials/teams/team_stats.twig" with {'team':team} %}
 
     <div class="col-md-12">
         <div class="col-12 col-md-6">
@@ -21,43 +19,11 @@
                 <span class="__message"></span>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title ">Requests</h4>
-                <p class="card-category"> Here is the list of all requests you have made</p>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-responsive">
-                        <tbody>
-                        <tr>
-                            <th style="border: 0px solid black!important;">Name</th>
-                            <td>Role</td>
-                            <td>Joined</td>
-                            {% if editor %}
-                                <td>Action</td>
-                            {% endif %}
-                        </tr>
-                        </tbody>
-                        <tbody>
-                            {% for member in team.getMembers() %}
-                                <tr>
-                                    <td>{{ member.getUser().getName() }}</td>
-                                    <td>{{ member.getRole() }}</td>
-                                    <td>{{ member.getJoinedOn().format('d.m.Y') }}</td>
-                                    {% if editor %}
-                                        <td>
-                                            <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn __remove_member">Remove member</button>
-                                            <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn __make_admin">Make administrator</button>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        {% include "partials/teams/team_members.twig" with {'team':team, 'editor':editor} %}
+
+        {% if editor %}
+            {% include "partials/teams/pending_members.twig" with {'team':team, 'editor':editor} %}
+        {% endif %}
     </div>
 
     <script>

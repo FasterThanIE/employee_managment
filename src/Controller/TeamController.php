@@ -8,6 +8,7 @@ use App\Entity\Team;
 use App\Entity\TeamMemberRequests;
 use App\Entity\TeamMembers;
 use App\Exceptions\InvalidRequestStatusException;
+use App\Exceptions\Requests\InvalidRequestActionException;
 use App\Form\NewTeamFormType;
 use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -38,7 +39,7 @@ class TeamController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      * @IsGranted("ROLE_PENDING")
-     * @throws InvalidRequestStatusException
+     * @throws InvalidRequestActionException
      */
     public function applyForATeam(Request $request): JsonResponse
     {
@@ -56,17 +57,9 @@ class TeamController extends AbstractController
         $memberRequests = new TeamMemberRequests();
         $memberRequests->setUser($this->getUser());
         $memberRequests->setTeam($team);
+        $memberRequests->setActionTo(TeamMemberRequests::ACTION_PENDING);
+        $memberRequests->setUpdatedBy($this->getUser()->getId());
         $em->persist($memberRequests);
-        $em->flush();
-
-        // TODO: Handle TeamMemberRequestLog using the event listener. Ex: postUpdate? postPersist?
-        $requestLog = new TeamMemberRequestsLog();
-        $requestLog->setUserId($this->getUser()->getId());
-        $requestLog->setTeamId($team->getId());
-        $requestLog->setAppliedOn(new DateTime());
-        $requestLog->setStatus(TeamMemberRequestsLog::STATUS_PENDING);
-        $requestLog->setRequestId($memberRequests->getId());
-        $em->persist($requestLog);
         $em->flush();
 
         return new JsonResponse([
@@ -169,7 +162,7 @@ class TeamController extends AbstractController
         if ($userId == $this->getUser()->getId()) {
             return new JsonResponse([
                 'success' => false,
-                'message' => "You cannot remove yourself from a team"
+                'message' => "You cannot add/remove yourself from a team"
             ]);
         }
         $em = $this->getDoctrine()->getManager();

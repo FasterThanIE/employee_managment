@@ -1,0 +1,53 @@
+<div class="col-12 row">
+    <div class="card card-stats col-lg-3 col-md-6 col-sm-6 ml-md-3">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">account_circle</i>
+            </div>
+            <p class="card-category">Members</p>
+            <h3 class="card-title">{{ team.getMembers().count() }}</h3>
+        </div>
+        <div class="card-footer">
+            <div class="stats">
+                Total members so far
+            </div>
+        </div>
+    </div>
+    <div class="card card-stats col-lg-3 col-md-6 col-sm-6 ml-md-3">
+        <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">admin_panel_settings</i>
+            </div>
+            <p class="card-category">Pending requests</p>
+            <h3 class="card-title">{{ team.getMemberRequests().count() }}</h3>
+        </div>
+        <div class="card-footer">
+            <div class="stats">
+                Current pending requests
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <p>ID: <span class="text-info font-weight-bold">{{ team.getId() }}</span></p>
+    <p>Name: <span class="text-info font-weight-bold">{{ team.getName() }}</span></p>
+    <p>Created On: <span class="text-info font-weight-bold">{{ team.getCreatedOn().format('d.m.Y') }}</span></p>
+</div>
+
+<script>
+    $(function() {
+        /**
+         * TODO: Need to add response message on ajax success
+         */
+        $(".__approve_member").click(function() {
+            var userId = $(this).attr('data-user-id');
+            $.ajax({
+                url:"/requests/approve/{{ team.getId() }}/"+userId,
+                success: function (data)
+                {
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>

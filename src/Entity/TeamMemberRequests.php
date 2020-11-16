@@ -2,15 +2,31 @@
 
 namespace App\Entity;
 
+use App\Exceptions\Requests\InvalidRequestActionException;
+use App\Exceptions\Requests\InvalidUpdatedByException;
+use App\Exceptions\Requests\MissingRequestActionException;
 use App\Repository\TeamMemberRequestsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TeamMemberRequestsRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class TeamMemberRequests
 {
+    /**
+     * ==========================================
+     * Actions
+     * Add any actions that you add to VALID_ACTIONS. This constant is used to check if ACTION is valid or not
+     */
+    const VALID_ACTIONS = [
+        self::ACTION_ACCEPTED, self::ACTION_DENIED, self::ACTION_PENDING,
+    ];
+    const ACTION_PENDING    = "pending";
+    const ACTION_ACCEPTED   = "accepted";
+    const ACTION_DENIED     = "denied";
+
     /**
      * @var User
      * @ORM\OneToOne(targetEntity="User")
@@ -41,14 +57,41 @@ class TeamMemberRequests
     private $teamId;
     /**
      * @var Team
-     * @ORM\OneToOne(targetEntity="Team")
+     * @ORM\ManyToOne(targetEntity="Team")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      */
     private $team;
 
+    /**
+     * @var int
+     */
+    private $updatedBy;
+
+    /**
+     * @var string
+     */
+    private $actionTo;
+
     public function __construct()
     {
         $this->appliedOn = new DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @throws MissingRequestActionException
+     * @throws InvalidUpdatedByException
+     */
+    public function prePersist()
+    {
+        if(!$this->getActionTo())
+        {
+            throw new MissingRequestActionException("Missing action for Member requests");
+        }
+        if(!$this->getUpdatedBy())
+        {
+            throw new InvalidUpdatedByException("Missing updated by for Memmber requests");
+        }
     }
 
     /**
@@ -102,9 +145,10 @@ class TeamMemberRequests
     }
 
     /**
-     * @return int
+     * Description: Must be able to return null, reason onFlush getting ID
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -134,9 +178,9 @@ class TeamMemberRequests
     }
 
     /**
-     * @return User
+     * @return int
      */
-    public function getUserId(): User
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -147,5 +191,51 @@ class TeamMemberRequests
     public function setUserId(User $userId): void
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionTo(): string
+    {
+        return $this->actionTo;
+    }
+
+    /**
+     * @param string $actionTo
+     * @throws InvalidRequestActionException
+     */
+    public function setActionTo(string $actionTo): void
+    {
+        if(!$this->isValidAction($actionTo))
+        {
+            throw new InvalidRequestActionException();
+        }
+        $this->actionTo = $actionTo;
+    }
+
+    /**+
+     * @param string $action
+     * @return bool
+     */
+    public static function isValidAction(string $action): bool
+    {
+        return in_array($action, self::VALID_ACTIONS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdatedBy(): int
+    {
+        return $this->updatedBy;
+    }
+
+    /**
+     * @param int $updatedBy
+     */
+    public function setUpdatedBy(int $updatedBy): void
+    {
+        $this->updatedBy = $updatedBy;
     }
 }

@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-header card-header-success">
+        <h4 class="card-title ">Team members</h4>
+        <p class="card-category"> List of all members that are part of your team</p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-responsive">
+                <tbody>
+                <tr>
+                    <th style="border: 0px solid black!important;">Name</th>
+                    <td>Role</td>
+                    <td>Joined</td>
+                    {% if editor %}
+                        <td>Action</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+                <tbody>
+                {% for member in team.getMembers() %}
+                    <tr>
+                        <td>{{ member.getUser().getName() }}</td>
+                        <td>{{ member.getRole() }}</td>
+                        <td>{{ member.getJoinedOn().format('d.m.Y') }}</td>
+                        {% if editor %}
+                            <td>
+                                <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn __remove_member">Remove member</button>
+                                <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn __make_admin">Make administrator</button>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -22,6 +22,11 @@ class Team
      */
     protected $members;
     /**
+     * @ORM\OneToMany(targetEntity="TeamMemberRequests", mappedBy="team")
+     * @ORM\JoinColumn(name="id", referencedColumnName="team_id")
+     */
+    protected $memberRequests;
+    /**
      * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -162,4 +167,21 @@ class Team
     {
         $this->members = $members;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMemberRequests()
+    {
+        return $this->memberRequests;
+    }
+
+    /**
+     * @param mixed $memberRequests
+     */
+    public function setMemberRequests($memberRequests): void
+    {
+        $this->memberRequests = $memberRequests;
+    }
+
 }

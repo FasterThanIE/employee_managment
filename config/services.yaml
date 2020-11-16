@@ -48,6 +48,11 @@ services:
                 connection: default
                 entity: "App\\Entity\\TeamMembers"
 
+    App\EventListeners\TeamRequests\TeamRequestPostPersistEventListener:
+        tags:
+            - {name: 'doctrine.event_listener', event: 'postPersist', entity: "App\\Entity\\TeamMemberRequests"}
+            - {name: 'doctrine.event_listener', event: 'preRemove', entity: "App\\Entity\\TeamMemberRequests"}
+
     App\EventListeners\User\UserOnFlushEventListener:
         tags:
             -

@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-header card-header-info">
+        <h4 class="card-title ">Requests</h4>
+        <p class="card-category"> List of all pending requests</p>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-responsive">
+                <tbody>
+                <tr>
+                    <th style="border: 0px solid black!important;">Name</th>
+                    <td>Action</td>
+                </tr>
+                </tbody>
+                <tbody>
+                    {% for member in team.getMemberRequests() %}
+                        <tr>
+                            <td>{{ member.getUser().getName() }}</td>
+                            <td>
+                                <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn-success btn __approve_member">Accept</button>
+                                <button data-user-id="{{ member.getUser().getId() }}" class="btn-primary btn-danger btn __deny_member">Deny</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

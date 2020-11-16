@@ -21,7 +21,7 @@ class TeamMemberRequestsLog
         self::STATUS_PENDING, self::STATUS_APPROVED, self::STATUS_REJECTED,
     ];
     const STATUS_PENDING = "pending";
-    const STATUS_APPROVED = "approved";
+    const STATUS_APPROVED = "accepted";
     const STATUS_REJECTED = "rejected";
 
 
