@@ -49,8 +49,7 @@ class RequestsController extends AbstractController
             new CanEditTeam(),
         ]);
 
-        if(count($response) > 0)
-        {
+        if (count($response) > 0) {
             return new JsonResponse([
                 'success' => false,
                 'message' => $response[0]->getMessage(),

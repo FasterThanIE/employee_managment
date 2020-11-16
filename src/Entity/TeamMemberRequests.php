@@ -23,9 +23,9 @@ class TeamMemberRequests
     const VALID_ACTIONS = [
         self::ACTION_ACCEPTED, self::ACTION_DENIED, self::ACTION_PENDING,
     ];
-    const ACTION_PENDING    = "pending";
-    const ACTION_ACCEPTED   = "accepted";
-    const ACTION_DENIED     = "denied";
+    const ACTION_PENDING = "pending";
+    const ACTION_ACCEPTED = "accepted";
+    const ACTION_DENIED = "denied";
 
     /**
      * @var User
@@ -84,14 +84,57 @@ class TeamMemberRequests
      */
     public function prePersist()
     {
-        if(!$this->getActionTo())
-        {
+        if (!$this->getActionTo()) {
             throw new MissingRequestActionException("Missing action for Member requests");
         }
-        if(!$this->getUpdatedBy())
-        {
+        if (!$this->getUpdatedBy()) {
             throw new InvalidUpdatedByException("Missing updated by for Memmber requests");
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionTo(): string
+    {
+        return $this->actionTo;
+    }
+
+    /**
+     * @param string $actionTo
+     * @throws InvalidRequestActionException
+     */
+    public function setActionTo(string $actionTo): void
+    {
+        if (!$this->isValidAction($actionTo)) {
+            throw new InvalidRequestActionException();
+        }
+        $this->actionTo = $actionTo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdatedBy(): int
+    {
+        return $this->updatedBy;
+    }
+
+    /**+
+     * @param string $action
+     * @return bool
+     */
+    public static function isValidAction(string $action): bool
+    {
+        return in_array($action, self::VALID_ACTIONS);
+    }
+
+    /**
+     * @param int $updatedBy
+     */
+    public function setUpdatedBy(int $updatedBy): void
+    {
+        $this->updatedBy = $updatedBy;
     }
 
     /**
@@ -191,51 +234,5 @@ class TeamMemberRequests
     public function setUserId(User $userId): void
     {
         $this->userId = $userId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionTo(): string
-    {
-        return $this->actionTo;
-    }
-
-    /**
-     * @param string $actionTo
-     * @throws InvalidRequestActionException
-     */
-    public function setActionTo(string $actionTo): void
-    {
-        if(!$this->isValidAction($actionTo))
-        {
-            throw new InvalidRequestActionException();
-        }
-        $this->actionTo = $actionTo;
-    }
-
-    /**+
-     * @param string $action
-     * @return bool
-     */
-    public static function isValidAction(string $action): bool
-    {
-        return in_array($action, self::VALID_ACTIONS);
-    }
-
-    /**
-     * @return int
-     */
-    public function getUpdatedBy(): int
-    {
-        return $this->updatedBy;
-    }
-
-    /**
-     * @param int $updatedBy
-     */
-    public function setUpdatedBy(int $updatedBy): void
-    {
-        $this->updatedBy = $updatedBy;
     }
 }

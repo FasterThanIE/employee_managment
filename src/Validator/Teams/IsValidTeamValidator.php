@@ -29,12 +29,11 @@ class IsValidTeamValidator extends ConstraintValidator
 
         $team = $this->em->getRepository(Team::class)->findOneBy(['id' => $teamId]);
 
-        if($team instanceof Team)
-        {
+        if ($team instanceof Team) {
             return;
         }
 
-        $this->context->buildViolation("Invalid team team id: ".$teamId)
+        $this->context->buildViolation("Invalid team team id: " . $teamId)
             ->setParameter('{{ value }}', 'team_id')
             ->addViolation();
     }

@@ -4,7 +4,6 @@ namespace App\Validator\Teams;
 
 use App\Entity\TeamMembers;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -52,6 +51,16 @@ class CanEditTeamValidator extends ConstraintValidator
     }
 
     /**
+     * @param string $message
+     */
+    private function throwViolation(string $message): void
+    {
+        $this->context->buildViolation($message)
+            ->setParameter('{{ value }}', 'x')
+            ->addViolation();
+    }
+
+    /**
      * @param int $userId
      * @param int $teamId
      * @return mixed
@@ -62,16 +71,6 @@ class CanEditTeamValidator extends ConstraintValidator
             'userId' => $userId,
             'teamId' => $teamId
         ]);
-    }
-
-    /**
-     * @param string $message
-     */
-    private function throwViolation(string $message): void
-    {
-        $this->context->buildViolation($message)
-            ->setParameter('{{ value }}', 'x')
-            ->addViolation();
     }
 
 }

@@ -37,21 +37,6 @@ class TeamRequestPostPersistEventListener
     }
 
     /**
-     * @param LifecycleEventArgs $eventArgs
-     * @throws InvalidRequestStatusException
-     */
-    public function preRemove(LifecycleEventArgs $eventArgs)
-    {
-        $entity = $eventArgs->getObject();
-
-        if (!$entity instanceof TeamMemberRequests) {
-            return;
-        }
-
-        $this->log($entity);
-    }
-
-    /**
      * @param TeamMemberRequests $entity
      * @throws InvalidRequestStatusException
      */
@@ -67,6 +52,21 @@ class TeamRequestPostPersistEventListener
         $requestLog->setUpdatedBy($entity->getUpdatedBy());
         $this->em->persist($requestLog);
         $this->em->flush();
+    }
+
+    /**
+     * @param LifecycleEventArgs $eventArgs
+     * @throws InvalidRequestStatusException
+     */
+    public function preRemove(LifecycleEventArgs $eventArgs)
+    {
+        $entity = $eventArgs->getObject();
+
+        if (!$entity instanceof TeamMemberRequests) {
+            return;
+        }
+
+        $this->log($entity);
     }
 
 }
