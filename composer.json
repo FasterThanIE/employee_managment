@@ -29,7 +29,8 @@
       "ext-json": "*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.22"
+        "symfony/maker-bundle": "^1.22",
+        "symfony/phpunit-bridge": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
